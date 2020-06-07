@@ -1,0 +1,16 @@
+﻿<!doctype html>
+<html>
+<head>
+    @await Html.PartialAsync("MetaPartial")
+    @await Html.PartialAsync("CssPartial") 
+</head>
+<body>
+    @await Html.PartialAsync("Site/NavPartial")
+    <main role="main">
+        @RenderBody()
+    </main>
+    @await Html.PartialAsync("Site/FooterPartial")
+
+    @await Html.PartialAsync("ScriptsPartial")
+</body>
+</html>

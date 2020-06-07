@@ -1,0 +1,14 @@
+[
+  {
+    "outputFileName": "wwwroot/css/bootstrap-cosmo.min.css",
+    "inputFiles": [
+      "wwwroot/css/bootstrap-cosmo.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/site.min.css",
+    "inputFiles": [
+      "wwwroot/css/site.css"
+    ]
+  }
+]
