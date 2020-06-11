@@ -19,6 +19,5 @@ namespace Simulation.Data.Entities.System
         public DateTime RegisterDate { get; set; } = DateTime.UtcNow;
         public DateTime? ConfirmDate { get; set; }
         public DateTime? LastLoginDate { get; set; }
-
     }
 }

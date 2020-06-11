@@ -1,33 +1,55 @@
-﻿<div class="border rounded">
-    <form class="form-signin" asp-area="" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@ViewBag.returnUrl">
-        <div class="form-group">
-            <div class="form-group">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">
-                            <i class="fas fa-at"></i>
-                        </span>
-                    </div>
-                    <input type="email" class="form-control" aria-label="Email" placeholder="Email">
+﻿@model LoginViewModel
+@{
+    Layout = null; ;
+}
+<!doctype html>
+<html>
+<head>
+    @await Html.PartialAsync("MetaPartial")
+    @await Html.PartialAsync("CssPartial")
+</head>
+<body>
+    @await Html.PartialAsync("ModalPartial") 
+    <div class="container border rounded-sm mt-5 ml-auto" style="width:450px">
+        <a class="close" aria-label="Close" asp-area="" asp-controller="Home" asp-action="Index">
+            <span aria-hidden="true">
+                <i class="fas fa-times mt-2"></i>
+            </span>
+        </a>
+        <form asp-area="" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@ViewBag.returnUrl" method="post" class="mt-5 form-group">
+            <div class="m-3">
+                <h3 class="h3 text-center">Sign in</h3>
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <i class="fas fa-at"></i>
+                    </span>
+                </div>
+                <input type="email" class="form-control" asp-for="@Model.Email" autofocus/>
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <i class="fas fa-key"></i>
+                    </span>
+                </div>
+                <input type="password" class="form-control" asp-for="@Model.Password" />
+            </div>
+            <div class="input-group mb-3">
+                <div class="custom-control custom-checkbox">
+                    <input class="custom-control-input" asp-for="@Model.RememberMe" checked="">
+                    <label class="custom-control-label" for="RememberMe">Remember Me</label>
                 </div>
             </div>
-        </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">
+                <i class="fas fa-sign-in-alt"></i>
+                Sign in
+            </button>
+            <p class="mt-5 mb-3 text-muted text-center">&copy; RBoard</p>
+        </form>
+    </div>
 
-        <div class="form-group">
-            <div class="form-group">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">
-                            <i class="fas fa-unlock"></i>
-                        </span>
-                    </div>
-                    <input type="password" class="form-control" aria-label="Password" placeholder="Password">
-                </div>
-            </div>
-        </div>
-
-        <button class="btn btn-primary" type="submit">
-            <i class="fas fa-sign-in-alt fa-w-16"></i> Sign in
-        </button>
-    </form>
-</div>
+    @await Html.PartialAsync("ScriptsPartial")
+</body>
+</html>
