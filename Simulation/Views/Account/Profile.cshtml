@@ -1,0 +1,3 @@
+﻿@model string
+    <h1>Profile page</h1>
+    <a class="btn btn-outline-danger" asp-area="" asp-controller="Account" asp-action="DeleteAccount" asp-route-userid="@Model">Permanently delete account @User.Identity.Name</a>

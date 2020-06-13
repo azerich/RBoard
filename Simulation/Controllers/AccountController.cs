@@ -256,5 +256,22 @@ namespace Simulation.Controllers
             }
         }
 
+        public IActionResult Profile() => View();
+
+        
+        public async Task<IActionResult> DeleteAccount()
+        {
+            await signInManager.SignOutAsync();
+
+            SiteUser user = await userManager.GetUserAsync(HttpContext.User).ConfigureAwait(false);
+            IList<string> roles = await userManager.GetRolesAsync(user).ConfigureAwait(false);
+            
+            await userManager.RemoveFromRolesAsync(user, roles).ConfigureAwait(false);
+            await userManager.DeleteAsync(user).ConfigureAwait(false);
+
+            TempData["InfoMessage"] = "Your account has been deleted from site.";
+            return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
+        }
+
     }
 }
