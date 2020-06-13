@@ -1,3 +1,47 @@
-﻿@model string
-    <h1>Profile page</h1>
-    <a class="btn btn-outline-danger" asp-area="" asp-controller="Account" asp-action="DeleteAccount" asp-route-userid="@Model">Permanently delete account @User.Identity.Name</a>
+﻿@model SiteUserViewModel
+<h1>Profile page</h1>
+<table class="table table-striped table-bordered">
+    <tbody>
+        <tr>
+            <th><label asp-for="Id"></label></th>
+            <td>@Model.Id</td>
+        </tr>
+        <tr>
+            <th><label asp-for="FirstName"></label></th>
+            <td>@Model.FirstName</td>
+        </tr>
+        <tr>
+            <th><label asp-for="MiddleName"></label></th>
+            <td>@Model.MiddleName</td>
+        </tr>
+        <tr>
+            <th><label asp-for="LastName"></label></th>
+            <td>@Model.LastName</td>
+        </tr>
+        <tr>
+            <th><label asp-for="Gender"></label></th>
+            <td>@Model.Gender</td>
+        </tr>
+        <tr>
+            <th><label asp-for="BirthDate"></label></th>
+            <td>@Model.BirthDate</td>
+        </tr>
+        <tr>
+            <th><label asp-for="Locale"></label></th>
+            <td>@Model.Locale</td>
+        </tr>
+        <tr>
+            <th><label asp-for="RegisterDate"></label></th>
+            <td>@Model.RegisterDate</td>
+        </tr>
+        <tr>
+            <th><label asp-for="ConfirmDate"></label></th>
+            <td>@Model.ConfirmDate</td>
+        </tr>
+        <tr>
+            <th><label asp-for="LastLoginDate"></label></th>
+            <td>@Model.LastLoginDate</td>
+        </tr>
+    </tbody>
+</table>
+<a class="btn btn-outline-danger" asp-area="" asp-controller="Account" asp-action="DeleteAccount" asp-route-userid="@Model.Id">Permanently delete account @User.Identity.Name</a>

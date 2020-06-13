@@ -256,9 +256,25 @@ namespace Simulation.Controllers
             }
         }
 
-        public IActionResult Profile() => View();
+        public async Task<IActionResult> Profile()
+        {
+            SiteUser user = await userManager.GetUserAsync(HttpContext.User);
+            SiteUserViewModel viewModel = new SiteUserViewModel
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                MiddleName = user.MiddleName,
+                LastName = user.LastName,
+                Gender = user.Gender,
+                BirthDate = user.BirthDate,
+                Locale = user.Locale,
+                RegisterDate = user.RegisterDate,
+                ConfirmDate = user.ConfirmDate,
+                LastLoginDate = user.LastLoginDate
+            };
+            return View(viewModel);
+        }
 
-        
         public async Task<IActionResult> DeleteAccount()
         {
             await signInManager.SignOutAsync();
