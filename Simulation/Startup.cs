@@ -40,9 +40,15 @@ namespace Simulation
                 options.LoginPath = "/account/login";
                 options.AccessDeniedPath = "/account/accessdenied";
                 options.SlidingExpiration = true;
+                options.Cookie.HttpOnly = true;
             });
 
-            services.AddAuthorization();
+            services.AddAuthorization(config =>
+            {
+                config.AddPolicy("Registered", policyBuilder => policyBuilder.RequireRole("Registered"));
+                config.AddPolicy("Confirmed", policyBuilder => policyBuilder.RequireRole("Confirmed"));
+                config.AddPolicy("Administrator", policyBuilder => policyBuilder.RequireRole("Administrator"));
+            });
 
             services.AddMailKit(configuration => configuration.UseMailKit(Configuration.GetSection("EMail").Get<MailKitOptions>()));
 
@@ -70,7 +76,7 @@ namespace Simulation
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}"));
+            app.UseEndpoints(endpoints => endpoints.MapControllerRoute("default", "{controller=Account}/{action=Register}/{id?}"));
         }
     }
 }

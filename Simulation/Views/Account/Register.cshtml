@@ -1,0 +1,47 @@
+﻿@model RegisterViewModel
+
+<div class="container border rounded-sm mt-5 ml-auto" style="width:450px">
+    <a class="close" aria-label="Close" asp-area="" asp-controller="Home" asp-action="Index">
+        <span aria-hidden="true">
+            <i class="fas fa-times mt-2"></i>
+        </span>
+    </a>
+    <form asp-area="" asp-controller="Account" asp-action="Register" method="post" class="mt-5 form-group">
+        <div class="m-3">
+            <h3 class="h3 text-center">Create account</h3>
+        </div>
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">
+                    <i id="EmailSign" class="fas fa-at"></i>
+                </span>
+            </div>
+            <input asp-for="@Model.Email" placeholder="Email" class="form-control" />
+        </div>
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">
+                    <i id="PasswordSign" class="fas fa-key"></i>
+                </span>
+            </div>
+            <input asp-for="@Model.Password" placeholder="Password" class="form-control" />
+        </div>
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">
+                    <i id="ConfirmPasswordSign" class="fas fa-check-double"></i>
+                </span>
+            </div>
+            <input asp-for="@Model.ConfirmedPassword" placeholder="Confirm password" class="form-control" />
+        </div>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">
+            <i class="fas fa-user-plus"></i>
+            Register
+        </button>
+    </form>
+</div>
+<script type="text/javascript" src="~/js/site.js"></script>

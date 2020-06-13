@@ -49,20 +49,23 @@ namespace Simulation.Migrations
                         new
                         {
                             Id = "3B1C34F1-C8E6-4013-AB5F-DF156968DAAE",
-                            ConcurrencyStamp = "620126aa-9b16-4a5f-856f-6a57dba91ac5",
-                            Name = "Administrator"
+                            ConcurrencyStamp = "00628ebc-f80c-479a-9047-edadffe3e778",
+                            Name = "Administrator",
+                            NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = "81F5E7BF-CAD7-4EEE-8D8B-2ABB2B071849",
-                            ConcurrencyStamp = "f3724c56-1eec-46b2-8f10-fd8e7c0d1b34",
-                            Name = "Confirmed"
+                            ConcurrencyStamp = "b9ca16dc-e5e0-43bc-a50a-230d3bdb30c2",
+                            Name = "Confirmed",
+                            NormalizedName = "CONFIRMED"
                         },
                         new
                         {
                             Id = "F090C70C-FFD2-49D2-9C57-A81DF9384206",
-                            ConcurrencyStamp = "3316ad7d-fa75-4cc2-b4b2-501853e3471a",
-                            Name = "Registered"
+                            ConcurrencyStamp = "ce666b39-ef8e-4581-adb4-ce104c10fcc4",
+                            Name = "Registered",
+                            NormalizedName = "REGISTERED"
                         });
                 });
 
@@ -149,6 +152,23 @@ namespace Simulation.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "A34B367E-7677-4730-BAD0-13A419B0796A",
+                            RoleId = "F090C70C-FFD2-49D2-9C57-A81DF9384206"
+                        },
+                        new
+                        {
+                            UserId = "A34B367E-7677-4730-BAD0-13A419B0796A",
+                            RoleId = "81F5E7BF-CAD7-4EEE-8D8B-2ABB2B071849"
+                        },
+                        new
+                        {
+                            UserId = "A34B367E-7677-4730-BAD0-13A419B0796A",
+                            RoleId = "3B1C34F1-C8E6-4013-AB5F-DF156968DAAE"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -266,8 +286,8 @@ namespace Simulation.Migrations
                         {
                             Id = "A34B367E-7677-4730-BAD0-13A419B0796A",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2c102720-25e2-4f78-aef8-e028bf29b7e0",
-                            ConfirmDate = new DateTime(2020, 6, 11, 10, 11, 31, 540, DateTimeKind.Utc).AddTicks(8114),
+                            ConcurrencyStamp = "951529a3-b818-4e17-b455-59dc28b68657",
+                            ConfirmDate = new DateTime(2020, 6, 13, 15, 22, 42, 865, DateTimeKind.Utc).AddTicks(549),
                             Email = "admin@rboard.com",
                             EmailConfirmed = true,
                             FirstName = "Site",
@@ -276,10 +296,10 @@ namespace Simulation.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@RBOARD.COM",
                             NormalizedUserName = "ADMIN@RBOARD.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOPlBuK1eAyDcdfU4EdAooA8fzu38dvOPBx7PFuUWTjVg6v20WEe5h6ZjE2Vq2sylg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFiAVPtE9iJtIVFAJ4+As1Lu8WsCQXZ5+/R/Qj7qsO1G/zN9YPeBZAbdoNXLmtKbjw==",
                             PhoneNumberConfirmed = false,
-                            RegisterDate = new DateTime(2020, 6, 11, 10, 11, 31, 540, DateTimeKind.Utc).AddTicks(4839),
-                            SecurityStamp = "06d8485f-3fa8-483d-b6f0-ce7c324e255a",
+                            RegisterDate = new DateTime(2020, 6, 13, 15, 22, 42, 864, DateTimeKind.Utc).AddTicks(9784),
+                            SecurityStamp = "635588ed-d80b-4e03-96c7-4c98503bbc55",
                             TwoFactorEnabled = false,
                             UserName = "admin@rboard.com"
                         });

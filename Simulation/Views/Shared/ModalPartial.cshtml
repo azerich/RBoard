@@ -1,6 +1,6 @@
 ﻿@{ 
     if (TempData.ContainsKey("WarningMessage")) ViewBag.WarningMessage = TempData["WarningMessage"].ToString();
-    if (TempData.ContainsKey("DangerMessage")) ViewBag.DangerMessage = TempData["DangergMessage"].ToString();
+    if (TempData.ContainsKey("DangerMessage")) ViewBag.DangerMessage = TempData["DangerMessage"].ToString();
     if (TempData.ContainsKey("SuccessMessage")) ViewBag.SuccessMessage = TempData["SuccessMessage"].ToString();
     if (TempData.ContainsKey("InfoMessage")) ViewBag.InfoMessage = TempData["InfoMessage"].ToString();
     if (TempData.ContainsKey("PrimaryMessage")) ViewBag.PrimaryMessage = TempData["PrimaryMessage"].ToString();
@@ -15,7 +15,7 @@
             <div class="col">
                 <div class="alert alert-dismissible alert-warning fade show mx-auto mt-1" role="alert">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Warning!</strong> @ViewBag.WarningMessage
+                    <strong>Warning!</strong> @Html.Raw(ViewBag.WarningMessage)
                 </div>
             </div>
             <div class="col"></div>
@@ -28,7 +28,7 @@
             <div class="col">
                 <div class="alert alert-dismissible alert-danger fade show mx-auto mt-1" role="alert">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Danger!</strong> @ViewBag.DangerMessage
+                    <strong>Danger!</strong> @Html.Raw(ViewBag.DangerMessage)
                 </div>
             </div>
             <div class="col"></div>
@@ -41,7 +41,7 @@
             <div class="col">
                 <div class="alert alert-dismissible alert-success fade show mx-auto mt-1" role="alert">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Success!</strong> @ViewBag.SuccessMessage
+                    <strong>Success!</strong> @Html.Raw(ViewBag.SuccessMessage)
                 </div>
             </div>
             <div class="col"></div>
@@ -54,7 +54,7 @@
             <div class="col">
                 <div class="alert alert-dismissible alert-info fade show mx-auto mt-1" role="alert">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Info!</strong> @ViewBag.InfoMessage
+                    <strong>Info!</strong> @Html.Raw(ViewBag.InfoMessage)
                 </div>
             </div>
             <div class="col"></div>
@@ -67,7 +67,7 @@
             <div class="col">
                 <div class="alert alert-dismissible alert-primary fade show mx-auto mt-1" role="alert">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Primary!</strong> @ViewBag.PrimaryMessage
+                    <strong>Primary!</strong> @Html.Raw(ViewBag.PrimaryMessage)
                 </div>
             </div>
             <div class="col"></div>
@@ -80,7 +80,7 @@
             <div class="col">
                 <div class="alert alert-dismissible alert-secondary fade show mx-auto mt-1" role="alert">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Secondary!</strong> @ViewBag.SecondaryMessage
+                    <strong>Secondary!</strong> @Html.Raw(ViewBag.SecondaryMessage)
                 </div>
             </div>
             <div class="col"></div>
@@ -93,7 +93,7 @@
             <div class="col">
                 <div class="alert alert-dismissible alert-light fade show mx-auto mt-1" role="alert">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Light!</strong> @ViewBag.LightMessage
+                    <strong>Light!</strong> @Html.Raw(ViewBag.LightMessage)
                 </div>
             </div>
             <div class="col"></div>
