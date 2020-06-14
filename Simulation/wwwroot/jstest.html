@@ -6,6 +6,27 @@
     <title>Javascript learning</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <style>
+        .container {
+            display: flex;
+            height: 100%;
+        }
+        .menu {
+            min-width: 100px;
+            max-width: 200px;
+            /*display: block;*/
+            border-style: double;
+            border-radius: 15px;
+            padding-top: 10px;
+            padding-left: 10px;
+        }
+        .content {
+            width: 100%;
+            display: flexbox;
+            border-style: double;
+            border-radius: 15px;
+            padding-top: 10px;
+            padding-left: 10px;
+        }
         .btn {
             border-radius: 10px;
             font-weight: bold;
@@ -43,90 +64,106 @@
     <script>
         const col = 10;
         const val = 10;
-        const danger = 'style=\"border-color: red; background: red; color: white; text-align: center; font-weight: bold;\"';
+        const danger = 'class="wip"';
+        const resetContent = '&nbsp;<a href=\"#\" onclick=\"WriteInContent(\'\');\"><small>Reset field</small></a>';
         function WriteInTag(word, method) {
             switch(method) {
                 case 'open-table':
-                    document.write('<table border="1">');
-                    break;
+                    return '<table border="1">';
                 case 'close-table':
-                    document.write('</table>');
-                    break;
+                    return '</table>';
                 case 'open-tr':
-                    document.write('<tr>');
-                    break;
+                    return '<tr>';
                 case 'close-tr':
-                    document.write('</tr>');
-                    break;
+                    return '</tr>';
                 case 'in-th':
-                    if(word == 0) document.write('<th></th>');
-                    else document.write('<th>'+ word + '</th>');
-                    break;
+                    if(word == 0) return '<th></th>';
+                    else return '<th>'+ word + '</th>';
                 case 'in-td':
-                    document.write('<td>'+word+'</td>');
-                    break;
+                    return '<td>'+word+'</td>';
                 case 'in-td-check':
-                    if(word > val) document.write('<td ' + danger + '>' + word + '</td>');
-                    else document.write('<td>' + word + '</td>');
-                    break;
+                    if(word > val) return '<td ' + danger + '>' + word + '</td>';
+                    else return '<td>' + word + '</td>';
             }
+        }
+        function WriteInContent(word) {
+            var content = document.getElementById('content');
+            content.innerHTML = word;
         }
         function ShowMTable() {
-            WriteInTag('','open-table');
-            WriteInTag('', 'open-tr');
+            var content = '<h3>Multiplication table' + resetContent +'</h3>';
+            content += WriteInTag('','open-table');
+            content += WriteInTag('', 'open-tr');
             for (let i = 0; i <= 10; i++) {
-                WriteInTag(i, 'in-th');
+                content += WriteInTag(i, 'in-th');
             }
-            WriteInTag('', 'close-tr');
+            content += WriteInTag('', 'close-tr');
 
             for (let i = 1; i <= 10; i++) {
-                WriteInTag('', 'open-tr');
+                content += WriteInTag('', 'open-tr');
                 for (let j = 0; j <= 10; j++) {
-                    if(j == 0) WriteInTag(i, 'in-th');
-                    else if(j == col) WriteInTag(i*j, 'in-td-check');
-                    else WriteInTag(j*i, 'in-td');
+                    if(j == 0) content += WriteInTag(i, 'in-th');
+                    else if(j == col) content += WriteInTag(i*j, 'in-td-check');
+                    else content += WriteInTag(j*i, 'in-td');
                 }
-                WriteInTag('', 'close-tr');
+                content += WriteInTag('', 'close-tr');
             }
-            WriteInTag('', 'close-table');
+            content += WriteInTag('', 'close-table');
+            WriteInContent(content);
         }
         function ShowGap() {
-            const success = 'style=\"border-color: green; background-color: green; color: white; text-align: center; font-weight: bold;\"';
-            document.write('<table border="1">');
+            const success = 'class="released"';
+            let content = '<h3>Gapful numbers' + resetContent +'</h3>';
+            content += '<table border="1">';
             for (let i = 100; i < 1000; i++) {
                   let first = Math.floor(i / 100);
                   let second = Math.floor((i - first * 100) / 10);
                   let third = i % 100 % 10;
                   let result = i % (first * 10 + third);
-                  if(result == 0) document.write('<tr '+ success + '><td>' + first + '</td><td>' + second + '</td><td>' + third + '</td></tr>');
-                  else document.write('<tr><td>' + first + '</td><td>' + second + '</td><td>' + third + '</td></tr>');
+                  if(result == 0) content += '<tr '+ success + '><td>' + first + '</td><td>' + second + '</td><td>' + third + '</td></tr>';
+                  else content += '<tr><td>' + first + '</td><td>' + second + '</td><td>' + third + '</td></tr>';
             }
-            document.write('</table>');
+            content += '</table>';
+            WriteInContent(content);
+        }
+        function SolveCollatz() {
+            let number = prompt('Set integer', 120);
+            let content = '<h3>Collatz Conjecture' + resetContent + '</h3><ol>';
+            let k = 0;
+            do {
+                if (number % 2 == 0) {
+                    content += '<li>' + number + ': is even => ' + number + ' \/ 2 = ';
+                    number /= 2;
+                    content +=number + '</li>';
+                }
+                else {
+                    content += '<li>' + number + ': is odd => ' + number + ' * 3 + 1 = ';
+                    number *= 3;
+                    number++;
+                    content +=number + '</li>';
+                }
+            } while (number != 1)
+            content += '<li>' + number + ': is finish!</li>';
+            content += '</ol>';
+            WriteInContent(content);
         }
     </script>
 </head>
 <body>
-    <h1>Tasks</h1>
-    <ul>
-        <li><button class="btn released" onclick="ShowMTable();">Show multiplication table</button></li>
-        <li><button class="btn released" onclick="ShowGap();">Show gapful numbers</button></li>
-        <li><button class="btn wip">Joseph problem</button></li>
-    </ul>
-    <h3>Legend</h3>
-    <table border="1">
-        <tr>
-            <th>Color</th>
-            <th>Value</th>
-        </tr>
-        <tr>
-            <td class="btn wip">Button</td>
-            <td>Work in progress</td>
-        </tr>
-        <tr>
-            <td class="btn released">Button</td>
-            <td>Script released</td>
-        </tr>
-    </table>
-    
+    <div class="container">
+    <div class="menu">
+        <h3>Menu</h3>
+        <hr />
+        <button class="btn released" onclick="ShowMTable();">Show multiplication table</button>
+        <button class="btn released" onclick="ShowGap();">Show gapful numbers</button>
+        <button class="btn released" onclick="SolveCollatz();">Show Collatz Conjecture</button>
+        <button class="btn wip">Joseph problem</button>
+        </ul>
+    </div>
+    <div class="content">
+        <div id="content">
+        </div>
+    </div>
+    </div>
 </body>
 </html>
