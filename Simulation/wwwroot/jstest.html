@@ -6,6 +6,37 @@
     <title>Javascript learning</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <style>
+        input {
+            border-color: black;
+            font-weight: normal;
+            border-radius: 10px;
+            width: 200px;
+            height: 30px;
+            text-indent: 10px;
+            margin-top: 15px;
+        }
+        .invalid-rule {
+            color: crimson;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+        .valid-rule {
+            color: darkgreen;
+            font-weight: normal;
+            text-decoration: line-through;
+        }
+        .invalid {
+            border-color: crimson;
+            background-color: crimson;
+            color: white;
+            font-weight: bold;
+        }
+        .valid {
+            border-color: darkgreen;
+            background-color: darkgreen;
+            color: white;
+            font-weight: bold;
+        }
         .container {
             display: flex;
             height: 100%;
@@ -241,6 +272,119 @@
             ol.appendChild(li);
             content.appendChild(ol);
         }
+        function CreateRegisterForm() {
+            let content = document.getElementById('content');
+            
+            let form = document.createElement('form');
+            form.addEventListener('submit', Validate);
+
+            let username = document.createElement('input');
+            username.id = 'userName';
+            username.type = 'text';
+            username.placeholder = 'User name';
+            form.appendChild(username);
+            
+            let br = document.createElement('br');
+            form.appendChild(br);
+
+            let password = document.createElement('input');
+            password.id = 'password';
+            password.type = 'password';
+            password.placeholder = 'Password';
+            form.appendChild(password);
+
+            form.appendChild(br);
+            
+            let confirm = document.createElement('input');
+            confirm.id = 'confirm';
+            confirm.type = 'password';
+            confirm.placeholder = 'Confirm';
+            form.appendChild(confirm);
+
+            form.appendChild(br);
+
+            let submitButton = document.createElement('button');
+            submitButton.type = 'submit';
+            submitButton.classList.add('btn','released');
+            submitButton.textContent = 'Submit';
+            form.appendChild(submitButton);
+
+            content.appendChild(form);
+
+            let result = document.createElement('ul');
+            result.style.display = 'block';
+            result.style.borderColor = 'rgb(110, 110, 110)';
+            result.style.borderRadius = '10px';
+
+            let unameWrongLength = document.createElement('li');
+            unameWrongLength.textContent = 'User name must be at least 4 characters';
+            unameWrongLength.id = 'unameWrongLength';
+            result.appendChild(unameWrongLength);
+
+            let passwordWrongLength = document.createElement('li');
+            passwordWrongLength.textContent = 'Password must be at least 8 characters';
+            passwordWrongLength.id = 'passwordWrongLength';
+            result.appendChild(passwordWrongLength);
+
+            let confirmError = document.createElement('li');
+            confirmError.id = 'confirmError';
+            confirmError.textContent = 'Password and confirm password must be identical';
+            result.appendChild(confirmError);
+
+            content.appendChild(result);
+        }
+        function ClearInputclassList(object) {
+            object.classList.remove('invalid');
+            object.classList.remove('valid');
+        }
+        function ClearResultclassList(object) {
+            object.classList.remove('invalid-rule');
+            object.classList.remove('valid-rule');
+        }
+        function Validate() {
+            let username = document.getElementById('userName');
+            let password = document.getElementById('password');
+            let confirm = document.getElementById('confirm');
+            let unameWrongLength = document.getElementById('unameWrongLength');
+            let passwordWrongLength = document.getElementById('passwordWrongLength');
+            let confirmError = document.getElementById('confirmError');
+
+            ClearInputclassList(username);
+            ClearInputclassList(password);
+            ClearInputclassList(confirm);
+            ClearResultclassList(unameWrongLength);
+            ClearResultclassList(passwordWrongLength);
+            ClearResultclassList(confirmError);
+
+            if(username.value.length < 3) {
+                username.classList.add('invalid');
+                unameWrongLength.classList.add('invalid-rule');
+            }
+            else {
+                username.classList.add('valid');
+                unameWrongLength.classList.add('valid-rule'); 
+            }
+
+            if(password.value.length < 8) {
+                password.classList.add('invalid');
+                passwordWrongLength.classList.add('invalid-rule');
+            }
+            else {
+                password.classList.add('valid');
+                passwordWrongLength.classList.add('valid-rule');
+            }
+
+            if(password.value != confirm.value) {
+                confirm.classList.add('invalid');
+                confirmError.classList.add('invalid-rule');
+            }
+            else {
+                confirm.classList.add('valid');
+                confirmError.classList.add('valid-rule');
+            }
+
+            return false;
+        }
     </script>
 </head>
 <body>
@@ -256,6 +400,7 @@
         <button class="btn released" onclick="ShowMTableNew();">Show multiplication table</button>
         <button class="btn released" onclick="ShowGapNew();">Show gapful numbers</button>
         <button class="btn released" onclick="ShowCollatzNew();">Show Collatz conjecture</button>
+        <button class="btn wip" onclick="CreateRegisterForm();">Validation form</button>
         <h2>In progress</h2>
         <button class="btn wip">Josephus problem</button>
         </ul>
