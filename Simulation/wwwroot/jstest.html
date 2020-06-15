@@ -90,7 +90,7 @@
             var content = document.getElementById('content');
             content.innerHTML = word;
         }
-        function ShowMTable() {
+        function ShowMTableOld() {
             var content = '<h3>Multiplication table' + resetContent +'</h3>';
             content += WriteInTag('','open-table');
             content += WriteInTag('', 'open-tr');
@@ -111,7 +111,7 @@
             content += WriteInTag('', 'close-table');
             WriteInContent(content);
         }
-        function ShowGap() {
+        function ShowGapOld() {
             const success = 'class="released"';
             let content = '<h3>Gapful numbers' + resetContent +'</h3>';
             content += '<table border="1">';
@@ -126,7 +126,7 @@
             content += '</table>';
             WriteInContent(content);
         }
-        function SolveCollatz() {
+        function ShowCollatzOld() {
             let number = prompt('Set integer', 120);
             let content = '<h3>Collatz Conjecture' + resetContent + '</h3><ol>';
             let k = 0;
@@ -147,6 +147,100 @@
             content += '</ol>';
             WriteInContent(content);
         }
+        function ShowMTableNew() {
+            let content = document.getElementById('content');
+            let header = document.createElement('h3');
+            header.innerHTML = 'Multiplication table' + resetContent;
+            content.appendChild(header);
+            let tbl = document.createElement('table');
+                tbl.style.borderColor = '#000';
+                tbl.cellPadding = 0;
+                tbl.cellSpacing = 0;
+                tbl.border = 1;
+            for (let i = 0; i <= 10; i++) {
+                let tr = document.createElement('tr');
+                tbl.appendChild(tr);
+                for (let j = 0; j <= 10; j++) {
+                    if(i == 0 && j == 0) {
+                        let th = document.createElement('th');
+                        th.textContent = '';
+                        tr.appendChild(th);
+                    }
+                    else if(j == 0 && i != 0) {
+                        let th = document.createElement('th');
+                        th.textContent = i;
+                        tr.appendChild(th);
+                    }
+                    else if(j != 0 && i == 0) {
+                        let th = document.createElement('th');
+                        th.textContent = j;
+                        tr.appendChild(th);
+                    }
+                    else if((i != 0 && j != 0) && i == j) {
+                        let td = document.createElement('td');
+                        td.style.backgroundColor = 'blue';
+                        td.style.color = '#fff';
+                        td.style.fontWeight = 'bold';
+                        td.style.textAlign = 'center';
+                        td.style.padding = '15px';
+                        td.textContent = i * j;
+                        tr.appendChild(td);
+                    }
+                    else {
+                        let td = document.createElement('td');
+                        td.textContent = i * j;
+                        tr.appendChild(td);
+                    }
+                }                
+            }
+            content.appendChild(tbl);
+        }
+        function ShowGapNew() {
+            let content = document.getElementById('content');
+            let header = document.createElement('h3');
+            header.innerHTML = 'Gapful numbers <sup>(only)</sup> between 100 and 999' + resetContent;
+            content.appendChild(header);
+            let ul = document.createElement('ul');
+            for (let i = 100; i <= 999; i++) {
+                let firstNum = Math.floor(i / 100);
+                let secondNum = Math.floor((i - firstNum * 100) / 10);
+                let thirdNum = i % 100 % 10;
+                let gap = i % (firstNum * 10 + thirdNum);
+                if (gap == 0) {
+                    let li = document.createElement('li');
+                    li.innerHTML =i + ' is gapful because ' + '<b>' + firstNum + '</b>' + secondNum + '<b>' + thirdNum + '</b>\/<b>' + '' + firstNum + thirdNum + '</b>=' + (i / (firstNum * 10 + thirdNum));
+                    ul.appendChild(li);
+                }
+            }
+            content.appendChild(ul);
+        }
+        function ShowCollatzNew() {
+            let content = document.getElementById('content');
+            let header = document.createElement('h3');
+            header.innerHTML = 'Collatz conjecture ' + resetContent;
+            content.appendChild(header);
+            let ol = document.createElement('ol');
+            let i = prompt('Enter number', 125);
+            do {
+                let li = document.createElement('li');
+                if (i % 2 == 0) {
+                    li.innerHTML = i + ' is even => ' + i + ' % 2 = ';
+                    i /= 2;
+                    li.innerHTML += i;
+                }
+                else {
+                    li.innerHTML = i + ' is odd => ' + i + ' * 3 + 1 = ';
+                    i *= 3;
+                    i++;
+                    li.innerHTML += i;
+                }
+                ol.appendChild(li);
+            } while (i != 1);
+            let li = document.createElement('li');
+            li.innerHTML = '1 is finish!';
+            ol.appendChild(li);
+            content.appendChild(ol);
+        }
     </script>
 </head>
 <body>
@@ -154,10 +248,16 @@
     <div class="menu">
         <h3>Menu</h3>
         <hr />
-        <button class="btn released" onclick="ShowMTable();">Show multiplication table</button>
-        <button class="btn released" onclick="ShowGap();">Show gapful numbers</button>
-        <button class="btn released" onclick="SolveCollatz();">Show Collatz Conjecture</button>
-        <button class="btn wip">Joseph problem</button>
+        <h2>First try</h2>
+        <button class="btn released" onclick="ShowMTableOld();">Show multiplication table</button>
+        <button class="btn released" onclick="ShowGapOld();">Show gapful numbers</button>
+        <button class="btn released" onclick="ShowCollatzOld();">Show Collatz Conjecture</button>
+        <h2>With DOM</h2>
+        <button class="btn released" onclick="ShowMTableNew();">Show multiplication table</button>
+        <button class="btn released" onclick="ShowGapNew();">Show gapful numbers</button>
+        <button class="btn released" onclick="ShowCollatzNew();">Show Collatz conjecture</button>
+        <h2>In progress</h2>
+        <button class="btn wip">Josephus problem</button>
         </ul>
     </div>
     <div class="content">
