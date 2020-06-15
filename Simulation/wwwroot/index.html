@@ -1,97 +1,76 @@
-﻿<!DOCTYPE html>
+﻿<!doctype html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register form</title>
-    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="lib/font-awesome/css/all.min.css">
+  <meta charset="utf-8" />
+  <title>Register form</title>
+  <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/4.5.0/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" />
 </head>
+
 <body>
-    <div class="container border rounded mt-5 ml-auto" style="min-width: 300px; max-width: 450px;">
-        <h1 class="mt-3 h3 text-center">Create account</h1>
-        <form action="/" method="post">
-            <div class="form-group" id="EmailBlock">
-                <label for="Email">Email</label>
-                <input type="email" name="Email" id="Email" class="form-control" placeholder="Email" onblur="CheckEmail(this);" autofocus />
-                <div class="valid-feedback" id="EmailFeedback">Well done!</div>
-            </div>
-            <label for="Password">Password</label>
-            <input type="password" id="Password" name="Password" class="form-control" placeholder="Password" onblur="CheckPassword(this);" />
-            <label for="ConfirmPassword">Confirm password</label>
-            <input type="password" id="ConfirmPassword" name="ConfirmPassword" class="form-control" placeholder="Confirm password" onchange="CheckConfirm(this,'Password');" />
-            <button type="submit" class="btn btn-block btn-primary">Register</button>
-        </form>
-    </div>
-    <script type="text/javascript" src="lib/jquery/jquery-3.5.0.slim.min.js"></script>
-    <script type="text/javascript" src="lib/font-awesome/js/all.min.js"></script>
-    <script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript">
-        function ResetInput(object) {
-            object.classList.remove('is-valid');
-            object.classList.remove('is-invalid');
-        }
-        function SetInputState(object, state) {
-            ResetInput(object);
-            if(state == 'invalid') {
-                object.classList.add('is-invalid');
-            }
-            else if(state == 'valid') {
-                object.classList.add('is-valid');
-            }
-        }
-        function ResetBlock(object) {
-            object.classList.remove('has-danger');
-            object.classList.remove('has-success');
-        }
-        function SetBlockState(object, state) {
-            ResetFormgroup(object);
-            if(state == 'valid') {
-                object.classList.add('has-success');
-            }
-            else if(state == 'invalid'){
-                object.classList.add('has-danger');
-            }
-            else {
-                ResetFormgroup(object);
-            }
-        }
-        function ResetFeedback(object) {
-            object.classList.remove('valid-feedback');
-            object.classList.remove('invalid-feedback');
-        }
-        function SetFeedbackState(object, state) {
-            ResetFeedback(object);
-            if(state == 'invalid') {
-                object.classList.add('invalid-feedback');
-            }
-            else if(state == 'valid') {
-                object.classList.add('valid-feedback');
-            }
-            else {
-                ResetFeedback(object);
-            }
-        }
-        function CheckEmail(object) {
-            const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            var objectBlock = document.getElementById(object + 'Block');
-            var objectFeedback = document.getElementById(object + 'Feedback');
-            ResetBlock(objectBlock);
-            ResetInput(object);
-            ResetFeedback(objectFeedback);
-            if (re.test(object.val)) {
-                SetBlockState(objectBlock, 'valid');
-                SetInputState(object, 'valid');
-                SetFeedbackState(objectFeedback, 'valid');
-                objectFeedback.value = 'Success!';
-            }
-            else {
-                SetBlockState(objectBlock, 'invalid');
-                SetInputState(object, 'invalid');
-                SetFeedbackState(objectFeedback, 'invalid');
-                objectFeedback.value = 'Error!';
-            }
-        }
-    </script>
+  <div class="container border rounded mt-5 mb-auto" style="width:450px">
+    <form action="/" onsubmit="Validate();" method="post">
+      <h1 class="h3 text-center">
+        Register form<br />
+        <small class="text-muted">with validation</small>
+      </h1>
+      <div class="form-group">
+        
+        <div class="input-group" id="emailGroup">
+          <div class="input-group-prepend">
+            <span class="input-group-text">
+              <i class="fas fa-at" id="emailIcon"></i>
+            </span>
+          </div>
+          <input type="email" class="form-control" placeholder="Email" id="emailInput"/>
+          <div id="emailFeedback"></div>
+        </div>
+
+        <div class="input-group" id="passwordGroup">
+          <div class="input-group-prepend">
+            <span class="input-group-text">
+              <i class="fas fa-key" id="passwordIcon"></i>
+            </span>
+          </div>
+          <input type="password" class="form-control" id="passwordInput" placeholder="Password" />
+          <div id="passwordFeedback"></div>
+        </div>
+
+        <div class="input-group" id="confirmGroup">
+          <div class="input-group-prepend">
+            <span class="input-group-text">
+              <i class="fas fa-check-double" id="confirmIcon"></i>
+            </span>
+          </div>
+          <input type="password" class="form-control" id="confirmInput" placeholder="Confirm password" />
+          <div id="confirmFeedback"></div>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <button class="btn btn-primary rounded">
+          <i class="fas fa-sign-in-alt"></i>
+          Create account
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.5.0.min.js"></script>
+  <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.1/jquery.validate.min.js"></script>
+  <script src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
+  <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/4.5.0/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
+  <script>
+      const passwordMinLength = 8;          //password minimal length
+      const passwordMaxLength = 16;         //password maximal length
+      const passwordContainDigit = true;    //password should contain digit
+      const passwordContainUpper = true;    //password should contain one character in upper case
+      const passwordContainSpecial = true;  //password should contain one special character
+  </script>
+  <script src="js/form-validate.js"></script>
 </body>
+
 </html>
