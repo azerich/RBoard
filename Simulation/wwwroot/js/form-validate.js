@@ -8,6 +8,7 @@ var passwordGroup = document.getElementById('passwordGroup');
 var passwordInput = document.getElementById('passwordInput');
 var passwordIcon = document.getElementById('passwordIcon');
 var passwordFeedback = document.getElementById('passwordFeedback');
+passwordInput.addEventListener('keypress', CheckPassword);
 //confirmPassword
 var confirmGroup = document.getElementById('confirmGroup');
 var confirmInput = document.getElementById('confirmInput');
@@ -63,15 +64,19 @@ function SetState(groupid, state, message) {
             group.classList.add('has-success');
             icon.classList.add('text-success');
             input.classList.add('is-valid');
-            feedback.classList.add('valid-feedback');
-            feedback.innerHTML = message;
+            if(String(message).length != 0) {
+                feedback.classList.add('valid-feedback');
+                feedback.innerHTML = String(message);
+            }
             break;
         case 'invalid':
             group.classList.add('has-danger');
             icon.classList.add('text-danger');
             input.classList.add('is-invalid');
-            feedback.classList.add('invalid-feedback');
-            feedback.innerHTML = message;
+            if(String(message).length != 0) { 
+                feedback.classList.add('invalid-feedback');
+                feedback.innerHTML = message;
+            }
             break;
     }
 }
@@ -83,7 +88,7 @@ function CheckEmailAvailability(object) {
     // ajax call
     return true;
 }
-function CheckEmail(object) {
+function CheckEmail() {
     let result = true;
     let ul = document.createElement('ul');
     if(!CheckEmailFormat(emailInput)) {
@@ -99,7 +104,8 @@ function CheckEmail(object) {
         result = false;
     }    
     if(!result) SetState('email', 'invalid', ul.innerHTML);
-    else SetState('email', 'valid', '');
+    else SetState('email', 'valid', successMessage);
+    return result;
 }
 function CheckPasswordLength(object) {
     if(object.value.length < passwordMinLength) return false;
@@ -120,7 +126,7 @@ function CheckPasswordSpecialContain(object) {
     if(passwordContainSpecial) return regexp.test(String(object.value));
     else return true;
 }
-function CheckPassword(object) {
+function CheckPassword() {
     let ul = document.createElement('ul');
     let result = true;
     if(!CheckPasswordLength(passwordInput)) {
@@ -149,17 +155,25 @@ function CheckPassword(object) {
     }
 
     if(!result) SetState('password', 'invalid', ul.innerHTML);
-    else SetState('password', 'valid','');
+    else SetState('password', 'valid', successMessage);
+
+    return result;
 }
-function Validate() {
-    //email check
-    CheckEmail(emailInput);    
-    
-    //password check
-    CheckPassword(passwordInput);
-    
-    //confirm check
-    if(String(confirmInput.value).length == 0 || String(passwordInput.value) != String(confirmInput.value)) SetState('confirm', 'invalid' , 'Password and confrim password must be match');
-    else SetState('confirm', 'valid', '');
-    return false;
+function CheckConfirm() {
+    let result = true;
+    if(String(confirmInput.value).length == 0 || String(confirmInput.value) != String(passwordInput.value)) {
+        SetState('confirm', 'invalid', confirmError);
+        result = false;
+    }
+    else {
+        SetState('confirm', 'valid', successMessage);        
+        result = true;
+    }
+    return result;
+}
+function ValidateRegistration() {
+    return CheckEmail() && CheckPassword() && CheckConfirm();
+}
+function ValidatePasswordAndConfirm() {
+    return CheckPassword() && CheckConfirm();
 }
