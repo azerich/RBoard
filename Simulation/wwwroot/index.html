@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>Register form</title>
+  <title>Registration form</title>
   <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/4.5.0/css/bootstrap.min.css" />
   <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" />
@@ -13,7 +13,7 @@
   <div class="container border rounded mt-5 mb-auto" style="width:450px">
     <form action="/" onsubmit="Validate();" method="post">
       <h1 class="h3 text-center">
-        Register form<br />
+        Registration form<br />
         <small class="text-muted">with validation</small>
       </h1>
       <div class="form-group">
@@ -64,11 +64,19 @@
   <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/4.5.0/bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
   <script>
+    //constants for password check rules
       const passwordMinLength = 8;          //password minimal length
-      const passwordMaxLength = 16;         //password maximal length
       const passwordContainDigit = true;    //password should contain digit
       const passwordContainUpper = true;    //password should contain one character in upper case
       const passwordContainSpecial = true;  //password should contain one special character
+
+    //constants for error messages
+      const emailFormatError = 'Please enter correct email';
+      const emailAvailabilityError = 'This email is already taken. Try another';
+      const passwordLengthError = 'Password must be 8 and more characters';
+      const passwordContainDigitError = 'Password should contain at least one digit';
+      const passwordContainUpperError = 'Password should contain at least one character in upper case';
+      const passwordContainSpecialError = 'Password should contain at least one special character';
   </script>
   <script src="js/form-validate.js"></script>
 </body>

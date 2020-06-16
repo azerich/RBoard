@@ -83,8 +83,26 @@ function CheckEmailAvailability(object) {
     // ajax call
     return true;
 }
+function CheckEmail(object) {
+    let result = true;
+    let ul = document.createElement('ul');
+    if(!CheckEmailFormat(emailInput)) {
+        let li = document.createElement('li');
+        li.innerHTML = emailFormatError;
+        ul.appendChild(li);
+        result = false;
+    } 
+    if(!CheckEmailAvailability(emailInput)) {
+        let li = document.createElement('li');
+        li.innerHTML = emailAvailabilityError;
+        ul.appendChild(li);
+        result = false;
+    }    
+    if(!result) SetState('email', 'invalid', ul.innerHTML);
+    else SetState('email', 'valid', '');
+}
 function CheckPasswordLength(object) {
-    if(object.value.length < passwordMinLength || object.value.length > passwordMaxLength) return false;
+    if(object.value.length < passwordMinLength) return false;
     else return true;
 }
 function CheckPasswordDigitContain(object) {
@@ -102,19 +120,46 @@ function CheckPasswordSpecialContain(object) {
     if(passwordContainSpecial) return regexp.test(String(object.value));
     else return true;
 }
+function CheckPassword(object) {
+    let ul = document.createElement('ul');
+    let result = true;
+    if(!CheckPasswordLength(passwordInput)) {
+        let li = document.createElement('li');
+        li.innerHTML = passwordLengthError;
+        ul.appendChild(li);
+        result = false;
+    }
+    if(!CheckPasswordDigitContain(passwordInput)) {
+        let li = document.createElement('li');
+        li.innerHTML = passwordContainDigitError;
+        ul.appendChild(li);
+        result = false;
+    }
+    if(!CheckPasswordUpperContain(passwordInput)) {
+        let li = document.createElement('li');
+        li.innerHTML = passwordContainUpperError;
+        ul.appendChild(li);
+        result = false;
+    }
+    if(!CheckPasswordSpecialContain(passwordInput)) {
+        let li = document.createElement('li');
+        li.innerHTML = passwordContainSpecialError;
+        ul.appendChild(li);
+        result = false;
+    }
+
+    if(!result) SetState('password', 'invalid', ul.innerHTML);
+    else SetState('password', 'valid','');
+}
 function Validate() {
     //email check
-    if(!CheckEmailFormat(emailInput)) SetState('email', 'invalid', 'Please enter correct email');
-    else if(!CheckEmailAvailability(emailInput)) SetState('email', 'invalid', 'This email is already taken. Try another');
-    else if(CheckEmailFormat(emailInput) && CheckEmailAvailability(emailInput)) SetState('email', 'valid', 'Success');
+    CheckEmail(emailInput);    
+    
     //password check
-    if(!CheckPasswordLength(passwordInput)) SetState('password', 'invalid', 'Password must be between 8 and 16 characters');
-    else if(!CheckPasswordDigitContain(passwordInput)) SetState('password', 'invalid', 'Password should contain at least one digit');
-    else if(!CheckPasswordUpperContain(passwordInput)) SetState('password', 'invalid', 'Password should contain at least one character in upper case');
-    else if(!CheckPasswordSpecialContain(passwordInput)) SetState('password', 'invalid', 'Password should contain at least one special character');
-    else SetState('password', 'valid', 'Success');
+    CheckPassword(passwordInput);
+    
     //confirm check
     if(String(confirmInput.value).length == 0 || String(passwordInput.value) != String(confirmInput.value)) SetState('confirm', 'invalid' , 'Password and confrim password must be match');
-    else SetState('confirm', 'valid', 'Success');
+    else SetState('confirm', 'valid', '');
     return false;
 }
