@@ -1,8 +1,13 @@
 ﻿//email
-var emailGroup = document.getElementById('emailGroup');
-var emailInput = document.getElementById('emailInput');
-var emailIcon = document.getElementById('emailIcon');
-var emailFeedback = document.getElementById('emailFeedback');
+//checking existing Email group in page
+// may be this page not contain email input (e.g. password reset page)
+let EmailExist = document.getElementById('emailGroup');
+if(EmailExist) {
+    var emailGroup = document.getElementById('emailGroup');
+    var emailInput = document.getElementById('emailInput');
+    var emailIcon = document.getElementById('emailIcon');
+    var emailFeedback = document.getElementById('emailFeedback');
+}
 //password
 var passwordGroup = document.getElementById('passwordGroup');
 var passwordInput = document.getElementById('passwordInput');
