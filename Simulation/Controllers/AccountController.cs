@@ -174,7 +174,7 @@ namespace Simulation.Controllers
         [HttpGet]
         public bool IsPasswordContainSpecial(string password)
         {
-            Regex regex = new Regex("[!@#$%^&*()_+=;:?.,<>№]");
+            Regex regex = new Regex("[!@#%&*()_+=;:?.,<>№]");
             MatchCollection matches = regex.Matches(password);
             return matches.Count > 0;
         }
@@ -189,7 +189,7 @@ namespace Simulation.Controllers
             if(!IsPasswordLengthValid(model.Password)) { errorMessages.Add("Password must be <b>8 characters</b> or more."); }
             if(!IsPasswordContainUpperLetters(model.Password)) { errorMessages.Add("Password must be contain at least one <b>upper letter</b>(e.g. A-Z)."); }
             if(!IsPasswordContainDigit(model.Password)) { errorMessages.Add("Password must be contain at least <b>one digit</b>(e.g. 0-9)."); }
-            if(!IsPasswordContainSpecial(model.Password)) { errorMessages.Add("Password must be contain at least <b>one special character</b>(e.g. !@#$%^&*()_+=;:?.,<>№)."); }
+            if(!IsPasswordContainSpecial(model.Password)) { errorMessages.Add("Password must be contain at least <b>one special character</b>(e.g. !@#%&*()_+=;:?.,<>№)."); }
             if(model.Password != model.ConfirmedPassword) { errorMessages.Add("Password and confirmed password do <b>not match</b>."); }
 
             isValid = (errorMessages.Count == 0);
