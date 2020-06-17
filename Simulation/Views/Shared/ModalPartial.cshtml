@@ -1,99 +1,16 @@
 ﻿@{ 
-    if (TempData.ContainsKey("WarningMessage")) ViewBag.WarningMessage = TempData["WarningMessage"].ToString();
-    if (TempData.ContainsKey("DangerMessage")) ViewBag.DangerMessage = TempData["DangerMessage"].ToString();
-    if (TempData.ContainsKey("SuccessMessage")) ViewBag.SuccessMessage = TempData["SuccessMessage"].ToString();
-    if (TempData.ContainsKey("InfoMessage")) ViewBag.InfoMessage = TempData["InfoMessage"].ToString();
-    if (TempData.ContainsKey("PrimaryMessage")) ViewBag.PrimaryMessage = TempData["PrimaryMessage"].ToString();
-    if (TempData.ContainsKey("SecondaryMessage")) ViewBag.SecondaryMessage = TempData["SecondaryMessage"].ToString();
-    if (TempData.ContainsKey("LightMessage")) ViewBag.LightMessage = TempData["LightMessage"].ToString();
+    if (TempData.ContainsKey(ModalMessageElements.ModalType.ToString()))
+    {
+        ViewData[ModalMessageElements.ModalType.ToString()] = TempData[ModalMessageElements.ModalType.ToString()].ToString();
+        ViewData[ModalMessageElements.ModalTitle.ToString()] = TempData[ModalMessageElements.ModalTitle.ToString()].ToString();
+        ViewData[ModalMessageElements.ModalBody.ToString()] = TempData[ModalMessageElements.ModalTitle.ToString()].ToString();
 
-
-    if (ViewBag.WarningMessage != null)
-    {
         <div class="row">
             <div class="col"></div>
             <div class="col">
-                <div class="alert alert-dismissible alert-warning fade show mx-auto mt-1" role="alert">
+                <div class="alert alert-dismissible alert-@ViewData[ModalMessageElements.ModalType.ToString()] fade show mx-auto mt-1" role="alert">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Warning!</strong> @Html.Raw(ViewBag.WarningMessage)
-                </div>
-            </div>
-            <div class="col"></div>
-        </div>
-    }
-    if (ViewBag.DangerMessage != null)
-    {
-        <div class="row">
-            <div class="col"></div>
-            <div class="col">
-                <div class="alert alert-dismissible alert-danger fade show mx-auto mt-1" role="alert">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Danger!</strong> @Html.Raw(ViewBag.DangerMessage)
-                </div>
-            </div>
-            <div class="col"></div>
-        </div>
-    }
-    if (ViewBag.SuccessMessage != null)
-    {
-        <div class="row">
-            <div class="col"></div>
-            <div class="col">
-                <div class="alert alert-dismissible alert-success fade show mx-auto mt-1" role="alert">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Success!</strong> @Html.Raw(ViewBag.SuccessMessage)
-                </div>
-            </div>
-            <div class="col"></div>
-        </div>
-    }
-    if (ViewBag.InfoMessage != null)
-    {
-        <div class="row">
-            <div class="col"></div>
-            <div class="col">
-                <div class="alert alert-dismissible alert-info fade show mx-auto mt-1" role="alert">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Info!</strong> @Html.Raw(ViewBag.InfoMessage)
-                </div>
-            </div>
-            <div class="col"></div>
-        </div>
-    }
-    if (ViewBag.PrimaryMessage != null)
-    {
-        <div class="row">
-            <div class="col"></div>
-            <div class="col">
-                <div class="alert alert-dismissible alert-primary fade show mx-auto mt-1" role="alert">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Primary!</strong> @Html.Raw(ViewBag.PrimaryMessage)
-                </div>
-            </div>
-            <div class="col"></div>
-        </div>
-    }
-    if (ViewBag.SecondaryMessage != null)
-    {
-        <div class="row">
-            <div class="col"></div>
-            <div class="col">
-                <div class="alert alert-dismissible alert-secondary fade show mx-auto mt-1" role="alert">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Secondary!</strong> @Html.Raw(ViewBag.SecondaryMessage)
-                </div>
-            </div>
-            <div class="col"></div>
-        </div>
-    }
-    if (ViewBag.LightMessage != null)
-    {
-        <div class="row">
-            <div class="col"></div>
-            <div class="col">
-                <div class="alert alert-dismissible alert-light fade show mx-auto mt-1" role="alert">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Light!</strong> @Html.Raw(ViewBag.LightMessage)
+                    <strong>@ViewData[ModalMessageElements.ModalTitle.ToString()]</strong> @Html.Raw(ViewData[ModalMessageElements.ModalBody.ToString()])
                 </div>
             </div>
             <div class="col"></div>

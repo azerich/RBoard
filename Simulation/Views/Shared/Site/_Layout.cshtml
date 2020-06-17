@@ -7,6 +7,7 @@
 <body>
     @await Html.PartialAsync("Site/NavPartial")
     <main role="main">
+        @await Html.PartialAsync("ToastPartial")
         @RenderBody()
     </main>
     @await Html.PartialAsync("Site/FooterPartial")

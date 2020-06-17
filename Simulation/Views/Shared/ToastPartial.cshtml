@@ -1,0 +1,39 @@
+﻿@{
+    if (TempData.ContainsKey(nameof(ToastMessageElements.ToastMessageType))
+        && TempData[nameof(ToastMessageElements.ToastMessageType)].ToString().Length > 0)
+    {
+        ViewData[nameof(ToastMessageElements.ToastMessageType)] = TempData[nameof(ToastMessageElements.ToastMessageType)].ToString();
+        ViewData[nameof(ToastMessageElements.ToastMessageIcon)] = TempData[nameof(ToastMessageElements.ToastMessageIcon)].ToString();
+        ViewData[nameof(ToastMessageElements.ToastMessageMuted)] = TempData[nameof(ToastMessageElements.ToastMessageMuted)].ToString();
+        ViewData[nameof(ToastMessageElements.ToastMessageTitle)] = TempData[nameof(ToastMessageElements.ToastMessageTitle)].ToString();
+        ViewData[nameof(ToastMessageElements.ToastMessageBody)] = TempData[nameof(ToastMessageElements.ToastMessageBody)].ToString();
+        ViewData[nameof(ToastMessageElements.ToastMessageTop)] = TempData[nameof(ToastMessageElements.ToastMessageTop)].ToString();
+        ViewData[nameof(ToastMessageElements.ToastMessageRight)] = TempData[nameof(ToastMessageElements.ToastMessageRight)].ToString();
+
+        <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
+            <div style="position: absolute; top: @ViewData[nameof(ToastMessageElements.ToastMessageTop)]; right: @ViewData[nameof(ToastMessageElements.ToastMessageRight)];">
+                <div class="toast fade show" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header">
+                        &nbsp;<i class="fas @ViewData[nameof(ToastMessageElements.ToastMessageIcon)] text-@ViewData[nameof(ToastMessageElements.ToastMessageType)] fa-2x"></i>
+                        <strong class="mr-auto">@ViewData[nameof(ToastMessageElements.ToastMessageTitle)]&nbsp;</strong>
+                        <small class="text-muted">[@ViewData[nameof(ToastMessageElements.ToastMessageMuted)]]</small>
+                        <button type="button" class="ml-2 mb-1 close" onclick="HideToast();" data-dismiss="toast" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="toast-body">
+                        @Html.Raw(ViewData[nameof(ToastMessageElements.ToastMessageBody)])
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function () {
+                $('.toast').toast('show');
+            });
+            function HideToast() {
+                $('.toast').toast('dispose');
+            }
+        </script>
+    }
+}
