@@ -6,8 +6,6 @@
         ToastMessageIcon,
         ToastMessageTitle,
         ToastMessageMuted,
-        ToastMessageBody,
-        ToastMessageTop,
-        ToastMessageRight
+        ToastMessageBody
     }
 }

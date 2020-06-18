@@ -60,31 +60,17 @@ namespace Simulation.Controllers
                         Microsoft.AspNetCore.Identity.SignInResult result = await signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false).ConfigureAwait(false);
                         if (result.Succeeded)
                         {
-                            DateTime? lastLogin = user.GetLastLoginDate();
-                            user.SetLastLoginDate(DateTime.UtcNow);
+                            DateTime? lastLogin = user.LastLoginDate;
+                            user.LastLoginDate = DateTime.UtcNow;
+                            await userManager.UpdateAsync(user).ConfigureAwait(false);
                             TempData[nameof(ToastMessageElements.ToastMessageType)] = "info";
                             TempData[nameof(ToastMessageElements.ToastMessageIcon)] = "fa-info-circle";
                             TempData[nameof(ToastMessageElements.ToastMessageMuted)] = DateTime.UtcNow.ToString("HH:mm");
-                            TempData[nameof(ToastMessageElements.ToastMessageTop)] = "10";
-                            TempData[nameof(ToastMessageElements.ToastMessageRight)] = "0";
                             TempData[nameof(ToastMessageElements.ToastMessageTitle)] = "Welcome back!";
-                            TempData[nameof(ToastMessageElements.ToastMessageBody)] = "Last time you were on the site " + lastLogin.ToString();
-                            if(returnUrl != null)
-                            {
-                                string[] url = returnUrl.ToString().Split('/');
-                                if(url[1].Length != 0)
-                                {
-                                    return RedirectToAction(url[1], url[0]);
-                                }
-                                else
-                                {
-                                    return RedirectToAction("", url[0]);
-                                }
-                            }
-                            else
-                            {
-                                return Redirect("/");
-                            }
+                            TempData[nameof(ToastMessageElements.ToastMessageBody)] = lastLogin == null ? "Congratulations! This is your first authorized visit to site!" : "Last time you were on the site at " + lastLogin.ToString() + " UTC";
+                            string[] url = returnUrl.ToString().Split('/');
+                            if (url[1].Length > 0) return RedirectToAction(url[1], url[0]);
+                            else return RedirectToAction("", url[0]);
                         }
                         else
                         {
@@ -123,8 +109,6 @@ namespace Simulation.Controllers
             TempData[nameof(ToastMessageElements.ToastMessageType)] = "success";
             TempData[nameof(ToastMessageElements.ToastMessageIcon)] = "fa-info-circle";
             TempData[nameof(ToastMessageElements.ToastMessageMuted)] = DateTime.UtcNow.ToString("HH:mm");
-            TempData[nameof(ToastMessageElements.ToastMessageTop)] = "10";
-            TempData[nameof(ToastMessageElements.ToastMessageRight)] = "0";
             TempData[nameof(ToastMessageElements.ToastMessageTitle)] = "Bye!";
             TempData[nameof(ToastMessageElements.ToastMessageBody)] = "See you again!";
             return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
@@ -256,8 +240,6 @@ namespace Simulation.Controllers
                     TempData[nameof(ToastMessageElements.ToastMessageType)] = "success";
                     TempData[nameof(ToastMessageElements.ToastMessageIcon)] = "fa-info-circle";
                     TempData[nameof(ToastMessageElements.ToastMessageMuted)] = DateTime.UtcNow.ToString("HH:mm");
-                    TempData[nameof(ToastMessageElements.ToastMessageTop)] = "10";
-                    TempData[nameof(ToastMessageElements.ToastMessageRight)] = "0";
                     TempData[nameof(ToastMessageElements.ToastMessageTitle)] = "Congratulations!";
                     TempData[nameof(ToastMessageElements.ToastMessageBody)] = "Your email is confirmed. Now you can use it to sign in to site!";
                     return RedirectToAction(nameof(AccountController.Login), nameof(AccountController).CutController());
@@ -311,8 +293,6 @@ namespace Simulation.Controllers
             TempData[nameof(ToastMessageElements.ToastMessageType)] = "info";
             TempData[nameof(ToastMessageElements.ToastMessageIcon)] = "fa-info-circle";
             TempData[nameof(ToastMessageElements.ToastMessageMuted)] = DateTime.UtcNow.ToString("HH:mm");
-            TempData[nameof(ToastMessageElements.ToastMessageTop)] = "10";
-            TempData[nameof(ToastMessageElements.ToastMessageRight)] = "0";
             TempData[nameof(ToastMessageElements.ToastMessageTitle)] = "Information!";
             TempData[nameof(ToastMessageElements.ToastMessageBody)] = "Your account has been deleted from site!";
             return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());

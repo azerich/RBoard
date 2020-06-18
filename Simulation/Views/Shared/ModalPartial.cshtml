@@ -1,16 +1,16 @@
 ﻿@{ 
     if (TempData.ContainsKey(ModalMessageElements.ModalType.ToString()))
     {
-        ViewData[ModalMessageElements.ModalType.ToString()] = TempData[ModalMessageElements.ModalType.ToString()].ToString();
-        ViewData[ModalMessageElements.ModalTitle.ToString()] = TempData[ModalMessageElements.ModalTitle.ToString()].ToString();
-        ViewData[ModalMessageElements.ModalBody.ToString()] = TempData[ModalMessageElements.ModalTitle.ToString()].ToString();
+        ViewData[nameof(ModalMessageElements.ModalType)] = TempData[nameof(ModalMessageElements.ModalType)];
+        ViewData[nameof(ModalMessageElements.ModalTitle)] = TempData[nameof(ModalMessageElements.ModalTitle)];
+        ViewData[nameof(ModalMessageElements.ModalBody)] = TempData[nameof(ModalMessageElements.ModalBody)];
 
         <div class="row">
             <div class="col"></div>
             <div class="col">
-                <div class="alert alert-dismissible alert-@ViewData[ModalMessageElements.ModalType.ToString()] fade show mx-auto mt-1" role="alert">
+                <div class="alert alert-dismissible alert-@ViewData[nameof(ModalMessageElements.ModalType)] fade show mx-auto mt-1" role="alert">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>@ViewData[ModalMessageElements.ModalTitle.ToString()]</strong> @Html.Raw(ViewData[ModalMessageElements.ModalBody.ToString()])
+                    <strong>@ViewData[nameof(ModalMessageElements.ModalTitle)]</strong> @Html.Raw(ViewData[nameof(ModalMessageElements.ModalBody)])
                 </div>
             </div>
             <div class="col"></div>
