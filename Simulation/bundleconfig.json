@@ -10,5 +10,11 @@
     "inputFiles": [
       "wwwroot/css/site.css"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/css/bootstrap-cyborg.min.css",
+    "inputFiles": [
+      "wwwroot/css/bootstrap-cyborg.css"
+    ]
   }
 ]

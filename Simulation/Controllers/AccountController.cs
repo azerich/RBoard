@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using NETCore.MailKit.Core;
 using Simulation.Data.Entities.System;
 using Simulation.Data.Enums;
@@ -267,17 +268,52 @@ namespace Simulation.Controllers
             SiteUserViewModel viewModel = new SiteUserViewModel
             {
                 Id = user.Id,
+                UserName = user.UserName,
+                Email = user.Email,
                 FirstName = user.FirstName,
                 MiddleName = user.MiddleName,
                 LastName = user.LastName,
                 Gender = user.Gender,
                 BirthDate = user.BirthDate,
                 Locale = user.Locale,
-                RegisterDate = user.RegisterDate,
-                ConfirmDate = user.ConfirmDate,
-                LastLoginDate = user.LastLoginDate
+                RegisterDate = user.RegisterDate.ToString(),
+                ConfirmDate = user.ConfirmDate.ToString(),
+                LastLoginDate = user.LastLoginDate.ToString()
             };
             return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Profile(SiteUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                SiteUser user = await userManager.FindByIdAsync(model.Id).ConfigureAwait(false);
+                if (user != null)
+                {
+                    user.FirstName = model.FirstName;
+                    user.MiddleName = model.MiddleName;
+                    user.LastName = model.LastName;
+                    user.Gender = model.Gender;
+                    user.BirthDate = model.BirthDate;
+                    user.Locale = model.Locale;
+                    await userManager.UpdateAsync(user).ConfigureAwait(false);
+                    TempData[nameof(ToastMessageElements.ToastMessageType)] = "success";
+                    TempData[nameof(ToastMessageElements.ToastMessageMuted)] = DateTime.UtcNow;
+                    TempData[nameof(ToastMessageElements.ToastMessageTitle)] = "Success!";
+                    TempData[nameof(ToastMessageElements.ToastMessageIcon)] = "fa-check-double";
+                    TempData[nameof(ToastMessageElements.ToastMessageBody)] = "Your profile has been updated!";
+                    return View(model);
+                }
+                else
+                {
+                    return View(model);
+                }
+            }
+            else
+            {
+                return View(model);
+            }
         }
 
         public async Task<IActionResult> DeleteAccount()
