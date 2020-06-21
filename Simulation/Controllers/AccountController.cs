@@ -33,10 +33,16 @@ namespace Simulation.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult Index() => RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
+        public IActionResult Index() => View(nameof(AccountController.AccessDenied));
 
         [AllowAnonymous]
-        public IActionResult AccessDenied() => RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
+        public IActionResult AccessDenied()
+        {
+            TempData[nameof(ModalMessageElements.ModalType)] = "warning";
+            TempData[nameof(ModalMessageElements.ModalTitle)] = "Attention!";
+            TempData[nameof(ModalMessageElements.ModalBody)] = "Your are not allowed to do this action!";
+            return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
+        }
 
         [AllowAnonymous]
         public IActionResult Login(string returnUrl)
@@ -298,6 +304,7 @@ namespace Simulation.Controllers
                     user.BirthDate = model.BirthDate;
                     user.Locale = model.Locale;
                     await userManager.UpdateAsync(user).ConfigureAwait(false);
+
                     TempData[nameof(ToastMessageElements.ToastMessageType)] = "success";
                     TempData[nameof(ToastMessageElements.ToastMessageMuted)] = DateTime.UtcNow;
                     TempData[nameof(ToastMessageElements.ToastMessageTitle)] = "Success!";
@@ -307,12 +314,18 @@ namespace Simulation.Controllers
                 }
                 else
                 {
-                    return View(model);
+                    TempData[nameof(ModalMessageElements.ModalType)] = "warning";
+                    TempData[nameof(ModalMessageElements.ModalTitle)] = "Warning!";
+                    TempData[nameof(ModalMessageElements.ModalBody)] = "During the profile change, errors occurred in the site. Try saving the changes again.";
+                    return View(nameof(AccountController.Profile));
                 }
             }
             else
             {
-                return View(model);
+                TempData[nameof(ModalMessageElements.ModalType)] = "warning";
+                TempData[nameof(ModalMessageElements.ModalTitle)] = "Warning!";
+                TempData[nameof(ModalMessageElements.ModalBody)] = "During the profile change, all recommended fields were not filled. Correct this and try saving the changes again.";
+                return View(nameof(AccountController.Profile));
             }
         }
 

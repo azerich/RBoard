@@ -3,3 +3,17 @@
 <script src="~/lib/jquery-validate-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 <script src="~/lib/font-awesome/js/all.min.js"></script>
 <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+@{
+    if (TempData.ContainsKey(nameof(ToastMessageElements.ToastMessageType))
+        && TempData[nameof(ToastMessageElements.ToastMessageType)].ToString().Length > 0)
+    {
+        <script>
+            $(document).ready(function () {
+                $('.toast').toast('show');
+            });
+            function HideToast() {
+                $('.toast').toast('dispose');
+            }
+        </script>
+    }
+}
