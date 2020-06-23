@@ -17,8 +17,8 @@ namespace Simulation.Data.System
             modelBuilder.Entity<SiteUser>().HasData(new SiteUser
             {
                 Id = "A34B367E-7677-4730-BAD0-13A419B0796A",
-                UserName = "admin@rboard.com",
-                NormalizedUserName = "ADMIN@RBOARD.COM",
+                UserName = "admin",
+                NormalizedUserName = "ADMIN",
                 Email = "admin@rboard.com",
                 NormalizedEmail = "ADMIN@RBOARD.COM",
                 EmailConfirmed = true,

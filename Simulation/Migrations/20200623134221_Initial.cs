@@ -166,15 +166,15 @@ namespace Simulation.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "3B1C34F1-C8E6-4013-AB5F-DF156968DAAE", "00628ebc-f80c-479a-9047-edadffe3e778", "Administrator", "ADMINISTRATOR" },
-                    { "81F5E7BF-CAD7-4EEE-8D8B-2ABB2B071849", "b9ca16dc-e5e0-43bc-a50a-230d3bdb30c2", "Confirmed", "CONFIRMED" },
-                    { "F090C70C-FFD2-49D2-9C57-A81DF9384206", "ce666b39-ef8e-4581-adb4-ce104c10fcc4", "Registered", "REGISTERED" }
+                    { "3B1C34F1-C8E6-4013-AB5F-DF156968DAAE", "69033593-03ab-40c3-9e55-a4c269592243", "Administrator", "ADMINISTRATOR" },
+                    { "81F5E7BF-CAD7-4EEE-8D8B-2ABB2B071849", "6aeb476b-bcf2-4cfa-bb02-fbb9e4f9abcc", "Confirmed", "CONFIRMED" },
+                    { "F090C70C-FFD2-49D2-9C57-A81DF9384206", "27c003db-848a-4d20-8d24-57e98730c36c", "Registered", "REGISTERED" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "BirthDate", "ConcurrencyStamp", "ConfirmDate", "Email", "EmailConfirmed", "FirstName", "Gender", "LastLoginDate", "LastName", "Locale", "LockoutEnabled", "LockoutEnd", "MiddleName", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RegisterDate", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "A34B367E-7677-4730-BAD0-13A419B0796A", 0, null, "951529a3-b818-4e17-b455-59dc28b68657", new DateTime(2020, 6, 13, 15, 22, 42, 865, DateTimeKind.Utc).AddTicks(549), "admin@rboard.com", true, "Site", null, null, "Administrator", "en-us", false, null, null, "ADMIN@RBOARD.COM", "ADMIN@RBOARD.COM", "AQAAAAEAACcQAAAAEFiAVPtE9iJtIVFAJ4+As1Lu8WsCQXZ5+/R/Qj7qsO1G/zN9YPeBZAbdoNXLmtKbjw==", null, false, new DateTime(2020, 6, 13, 15, 22, 42, 864, DateTimeKind.Utc).AddTicks(9784), "635588ed-d80b-4e03-96c7-4c98503bbc55", false, "admin@rboard.com" });
+                values: new object[] { "A34B367E-7677-4730-BAD0-13A419B0796A", 0, null, "828a8999-f423-45ad-8a13-63a0e7ace999", new DateTime(2020, 6, 23, 13, 42, 20, 446, DateTimeKind.Utc).AddTicks(1352), "admin@rboard.com", true, "Site", null, null, "Administrator", "en-us", false, null, null, "ADMIN@RBOARD.COM", "ADMIN", "AQAAAAEAACcQAAAAEBiZva7I8Bs99w4kap8Do5U9E0HR1bysCSbwXXxOKRytWE15cBUBmvF0/n4TAOzisA==", null, false, new DateTime(2020, 6, 23, 13, 42, 20, 445, DateTimeKind.Utc).AddTicks(7901), "030c6f83-6808-46ec-ab4f-187f5b2fab76", false, "admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",

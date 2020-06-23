@@ -39,8 +39,9 @@ namespace Simulation.Controllers
         public IActionResult AccessDenied()
         {
             TempData[nameof(ModalMessageElements.ModalType)] = "warning";
-            TempData[nameof(ModalMessageElements.ModalTitle)] = "Attention!";
-            TempData[nameof(ModalMessageElements.ModalBody)] = "Your are not allowed to do this action!";
+            TempData[nameof(ModalMessageElements.ModalTitle)] = "Warning!";
+            TempData[nameof(ModalMessageElements.ModalBody)] = "Your are not allowed for this operation!";
+
             return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
         }
 
@@ -124,8 +125,17 @@ namespace Simulation.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Register()
         {
-            await signInManager.SignOutAsync().ConfigureAwait(false);
+            if(HttpContext.User.Identity.IsAuthenticated)
+                await signInManager.SignOutAsync().ConfigureAwait(false);
             return View(new RegisterViewModel());
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<bool> IsRegisteredUserName(string username)
+        {
+            SiteUser user = await userManager.FindByNameAsync(username).ConfigureAwait(false);
+            return user == null;
         }
 
         [AllowAnonymous]
@@ -176,6 +186,7 @@ namespace Simulation.Controllers
         {
             bool isValid = false;
             List<string> errorMessages = new List<string>();
+            if(await IsRegisteredUserName(model.UserName).ConfigureAwait(false)) { errorMessages.Add($"User name <b>{model.UserName}</b> is already taken."); }
             if(await IsRegisteredEmail(model.Email).ConfigureAwait(false)) { errorMessages.Add($"Email <b>{model.Email}</b> is already taken.");}
             if(!IsPasswordLengthValid(model.Password)) { errorMessages.Add("Password must be <b>8 characters</b> or more."); }
             if(!IsPasswordContainUpperLetters(model.Password)) { errorMessages.Add("Password must be contain at least one <b>upper letter</b>(e.g. A-Z)."); }
@@ -268,64 +279,66 @@ namespace Simulation.Controllers
             }
         }
 
-        public async Task<IActionResult> Profile()
+        public async Task<IActionResult> ProfileView(string username)
         {
-            SiteUser user = await userManager.GetUserAsync(HttpContext.User).ConfigureAwait(false);
-            SiteUserViewModel viewModel = new SiteUserViewModel
+            if(HttpContext.User.Identity.IsAuthenticated)
             {
-                Id = user.Id,
-                UserName = user.UserName,
-                Email = user.Email,
-                FirstName = user.FirstName,
-                MiddleName = user.MiddleName,
-                LastName = user.LastName,
-                Gender = user.Gender,
-                BirthDate = user.BirthDate,
-                Locale = user.Locale,
-                RegisterDate = user.RegisterDate.ToString(),
-                ConfirmDate = user.ConfirmDate.ToString(),
-                LastLoginDate = user.LastLoginDate.ToString()
-            };
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Profile(SiteUserViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                SiteUser user = await userManager.FindByIdAsync(model.Id).ConfigureAwait(false);
-                if (user != null)
+                SiteUserViewModel model;
+                if (string.IsNullOrEmpty(username))
                 {
-                    user.FirstName = model.FirstName;
-                    user.MiddleName = model.MiddleName;
-                    user.LastName = model.LastName;
-                    user.Gender = model.Gender;
-                    user.BirthDate = model.BirthDate;
-                    user.Locale = model.Locale;
-                    await userManager.UpdateAsync(user).ConfigureAwait(false);
-
-                    TempData[nameof(ToastMessageElements.ToastMessageType)] = "success";
-                    TempData[nameof(ToastMessageElements.ToastMessageMuted)] = DateTime.UtcNow;
-                    TempData[nameof(ToastMessageElements.ToastMessageTitle)] = "Success!";
-                    TempData[nameof(ToastMessageElements.ToastMessageIcon)] = "fa-check-double";
-                    TempData[nameof(ToastMessageElements.ToastMessageBody)] = "Your profile has been updated!";
-                    return View(model);
+                    SiteUser user = await userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+                    if(user == null)
+                    {
+                        TempData[nameof(ModalMessageElements.ModalType)] = "warning";
+                        TempData[nameof(ModalMessageElements.ModalTitle)] = "Warning!";
+                        TempData[nameof(ModalMessageElements.ModalBody)] = "Something happened on site. Try again later!";
+                        return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
+                    }
+                    else
+                    {
+                        model = new SiteUserViewModel(user);
+                        return View(model);
+                    }
                 }
                 else
                 {
-                    TempData[nameof(ModalMessageElements.ModalType)] = "warning";
-                    TempData[nameof(ModalMessageElements.ModalTitle)] = "Warning!";
-                    TempData[nameof(ModalMessageElements.ModalBody)] = "During the profile change, errors occurred in the site. Try saving the changes again.";
-                    return View(nameof(AccountController.Profile));
+                    SiteUser user = await userManager.FindByNameAsync(username).ConfigureAwait(false);
+                    if (user != null)
+                    {
+                        model = new SiteUserViewModel(user);
+                        return View(model);
+                    }
+                    else
+                    {
+                        TempData[nameof(ModalMessageElements.ModalType)] = "warning";
+                        TempData[nameof(ModalMessageElements.ModalTitle)] = "Warning!";
+                        TempData[nameof(ModalMessageElements.ModalBody)] = "User not found!";
+                        return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
+                    }
                 }
             }
             else
             {
-                TempData[nameof(ModalMessageElements.ModalType)] = "warning";
-                TempData[nameof(ModalMessageElements.ModalTitle)] = "Warning!";
-                TempData[nameof(ModalMessageElements.ModalBody)] = "During the profile change, all recommended fields were not filled. Correct this and try saving the changes again.";
-                return View(nameof(AccountController.Profile));
+                if (string.IsNullOrEmpty(username))
+                {
+                    return RedirectToAction(nameof(AccountController.AccessDenied), nameof(HomeController).CutController());
+                }
+                else
+                {
+                    SiteUser user = await userManager.FindByNameAsync(username).ConfigureAwait(false);
+                    if (user != null)
+                    {
+                        SiteUserViewModel model = new SiteUserViewModel(user);
+                        return View(model);
+                    }
+                    else
+                    {
+                        TempData[nameof(ModalMessageElements.ModalType)] = "warning";
+                        TempData[nameof(ModalMessageElements.ModalTitle)] = "Warning!";
+                        TempData[nameof(ModalMessageElements.ModalBody)] = "User not found!";
+                        return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
+                    }
+                }
             }
         }
 

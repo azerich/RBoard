@@ -1,4 +1,6 @@
-﻿using Simulation.Data.Enums;
+﻿using Microsoft.AspNetCore.Identity;
+using Simulation.Data.Entities.System;
+using Simulation.Data.Enums;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -6,6 +8,21 @@ namespace Simulation.Models
 {
     public class SiteUserViewModel
     {
+        public SiteUserViewModel(SiteUser user)
+        {
+            Id = user.Id;
+            UserName = user.UserName;
+            Email = user.Email;
+            FirstName = user.FirstName;
+            MiddleName = user.MiddleName;
+            LastName = user.LastName;
+            Gender = user.Gender;
+            BirthDate = user.BirthDate;
+            Locale = user.Locale;
+            RegisterDate = user.RegisterDate.ToString();
+            ConfirmDate = user.ConfirmDate.ToString();
+            LastLoginDate = user.LastLoginDate.ToString();
+        }
         [Display(Name ="Id")]
         [Required]
         public string Id { get; set; }
