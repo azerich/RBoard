@@ -38,7 +38,7 @@ namespace Simulation.Controllers
         [AllowAnonymous]
         public IActionResult AccessDenied()
         {
-            TempData[nameof(ModalMessageElements.ModalType)] = "warning";
+            TempData[nameof(ModalMessageElements.ModalType)] = NoticeType.Warning;
             TempData[nameof(ModalMessageElements.ModalTitle)] = "Warning!";
             TempData[nameof(ModalMessageElements.ModalBody)] = "Your are not allowed for this operation!";
 
@@ -71,7 +71,7 @@ namespace Simulation.Controllers
                             DateTime? lastLogin = user.LastLoginDate;
                             user.LastLoginDate = DateTime.UtcNow;
                             await userManager.UpdateAsync(user).ConfigureAwait(false);
-                            TempData[nameof(ToastMessageElements.ToastMessageType)] = "info";
+                            TempData[nameof(ToastMessageElements.ToastMessageType)] = NoticeType.Info;
                             TempData[nameof(ToastMessageElements.ToastMessageIcon)] = "fa-info-circle";
                             TempData[nameof(ToastMessageElements.ToastMessageMuted)] = DateTime.UtcNow.ToString("HH:mm");
                             TempData[nameof(ToastMessageElements.ToastMessageTitle)] = "Welcome back!";
@@ -82,7 +82,7 @@ namespace Simulation.Controllers
                         }
                         else
                         {
-                            TempData[nameof(ModalMessageElements.ModalType)] = "danger";
+                            TempData[nameof(ModalMessageElements.ModalType)] = NoticeType.Danger;
                             TempData[nameof(ModalMessageElements.ModalTitle)] = "Warning!";
                             TempData[nameof(ModalMessageElements.ModalBody)] = "Wrong password!";
                             return View();
@@ -90,7 +90,7 @@ namespace Simulation.Controllers
                     }
                     else
                     {
-                        TempData[nameof(ModalMessageElements.ModalType)] = "danger";
+                        TempData[nameof(ModalMessageElements.ModalType)] = NoticeType.Danger;
                         TempData[nameof(ModalMessageElements.ModalTitle)] = "Warning!";
                         TempData[nameof(ModalMessageElements.ModalBody)] = "Your email is not confirmed! <br />";
                         TempData[nameof(ModalMessageElements.ModalBody)] += "You must confirm it before login!";
@@ -99,7 +99,7 @@ namespace Simulation.Controllers
                 }
                 else
                 {
-                    TempData[nameof(ModalMessageElements.ModalType)] = "danger";
+                    TempData[nameof(ModalMessageElements.ModalType)] = NoticeType.Danger;
                     TempData[nameof(ModalMessageElements.ModalTitle)] = "Warning!";
                     TempData[nameof(ModalMessageElements.ModalBody)] = "User not found!";
                     return View();
@@ -114,7 +114,7 @@ namespace Simulation.Controllers
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync().ConfigureAwait(false);
-            TempData[nameof(ToastMessageElements.ToastMessageType)] = "success";
+            TempData[nameof(ToastMessageElements.ToastMessageType)] = NoticeType.Succes;
             TempData[nameof(ToastMessageElements.ToastMessageIcon)] = "fa-info-circle";
             TempData[nameof(ToastMessageElements.ToastMessageMuted)] = DateTime.UtcNow.ToString("HH:mm");
             TempData[nameof(ToastMessageElements.ToastMessageTitle)] = "Bye!";
@@ -225,7 +225,7 @@ namespace Simulation.Controllers
                 }
                 else
                 {
-                    TempData[nameof(ModalMessageElements.ModalType)] = "danger";
+                    TempData[nameof(ModalMessageElements.ModalType)] = NoticeType.Danger;
                     TempData[nameof(ModalMessageElements.ModalTitle)] = "Warning!";
                     TempData[nameof(ModalMessageElements.ModalBody)] = "Can`t create a user with this credentials. Try another credentials!";
                     return View(model);
@@ -233,7 +233,7 @@ namespace Simulation.Controllers
             }
             else
             {
-                TempData[nameof(ModalMessageElements.ModalType)] = "danger";
+                TempData[nameof(ModalMessageElements.ModalType)] = NoticeType.Danger;
                 TempData[nameof(ModalMessageElements.ModalTitle)] = "Warning!";
                 TempData[nameof(ModalMessageElements.ModalBody)] = "<ul>";
                 foreach (string error in errorMessages)
@@ -255,7 +255,7 @@ namespace Simulation.Controllers
                 if (confirmResult.Succeeded)
                 {
                     await userManager.AddToRoleAsync(user, "Confirmed").ConfigureAwait(false);
-                    TempData[nameof(ToastMessageElements.ToastMessageType)] = "success";
+                    TempData[nameof(ToastMessageElements.ToastMessageType)] = NoticeType.Succes;
                     TempData[nameof(ToastMessageElements.ToastMessageIcon)] = "fa-info-circle";
                     TempData[nameof(ToastMessageElements.ToastMessageMuted)] = DateTime.UtcNow.ToString("HH:mm");
                     TempData[nameof(ToastMessageElements.ToastMessageTitle)] = "Congratulations!";
@@ -264,7 +264,7 @@ namespace Simulation.Controllers
                 }
                 else
                 {
-                    TempData[nameof(ModalMessageElements.ModalType)] = "danger";
+                    TempData[nameof(ModalMessageElements.ModalType)] = NoticeType.Danger;
                     TempData[nameof(ModalMessageElements.ModalTitle)] = "Warning!";
                     TempData[nameof(ModalMessageElements.ModalBody)] = "Wrong email verification code. Try to,follow link from letter again!";
                     return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
@@ -272,7 +272,7 @@ namespace Simulation.Controllers
             }
             else
             {
-                TempData[nameof(ModalMessageElements.ModalType)] = "danger";
+                TempData[nameof(ModalMessageElements.ModalType)] = NoticeType.Danger;
                 TempData[nameof(ModalMessageElements.ModalTitle)] = "Warning!";
                 TempData[nameof(ModalMessageElements.ModalBody)] = "Wrong user credentials to verify your email. Try to follow to link from letter again!";
                 return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
@@ -289,7 +289,7 @@ namespace Simulation.Controllers
                     SiteUser user = await userManager.FindByNameAsync(HttpContext.User.Identity.Name);
                     if(user == null)
                     {
-                        TempData[nameof(ModalMessageElements.ModalType)] = "warning";
+                        TempData[nameof(ModalMessageElements.ModalType)] = NoticeType.Danger;
                         TempData[nameof(ModalMessageElements.ModalTitle)] = "Warning!";
                         TempData[nameof(ModalMessageElements.ModalBody)] = "Something happened on site. Try again later!";
                         return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
@@ -310,7 +310,7 @@ namespace Simulation.Controllers
                     }
                     else
                     {
-                        TempData[nameof(ModalMessageElements.ModalType)] = "warning";
+                        TempData[nameof(ModalMessageElements.ModalType)] = NoticeType.Warning;
                         TempData[nameof(ModalMessageElements.ModalTitle)] = "Warning!";
                         TempData[nameof(ModalMessageElements.ModalBody)] = "User not found!";
                         return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
@@ -333,7 +333,7 @@ namespace Simulation.Controllers
                     }
                     else
                     {
-                        TempData[nameof(ModalMessageElements.ModalType)] = "warning";
+                        TempData[nameof(ModalMessageElements.ModalType)] = NoticeType.Warning;
                         TempData[nameof(ModalMessageElements.ModalTitle)] = "Warning!";
                         TempData[nameof(ModalMessageElements.ModalBody)] = "User not found!";
                         return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
@@ -352,7 +352,7 @@ namespace Simulation.Controllers
             await userManager.RemoveFromRolesAsync(user, roles).ConfigureAwait(false);
             await userManager.DeleteAsync(user).ConfigureAwait(false);
 
-            TempData[nameof(ToastMessageElements.ToastMessageType)] = "info";
+            TempData[nameof(ToastMessageElements.ToastMessageType)] = NoticeType.Info;
             TempData[nameof(ToastMessageElements.ToastMessageIcon)] = "fa-info-circle";
             TempData[nameof(ToastMessageElements.ToastMessageMuted)] = DateTime.UtcNow.ToString("HH:mm");
             TempData[nameof(ToastMessageElements.ToastMessageTitle)] = "Information!";

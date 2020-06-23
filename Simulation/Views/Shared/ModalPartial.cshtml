@@ -1,5 +1,5 @@
 ﻿@{ 
-    if (TempData.ContainsKey(ModalMessageElements.ModalType.ToString()))
+    if (TempData.ContainsKey(nameof(ModalMessageElements.ModalType))
     {
         ViewData[nameof(ModalMessageElements.ModalType)] = TempData[nameof(ModalMessageElements.ModalType)];
         ViewData[nameof(ModalMessageElements.ModalTitle)] = TempData[nameof(ModalMessageElements.ModalTitle)];
@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col"></div>
             <div class="col">
-                <div class="alert alert-dismissible alert-@ViewData[nameof(ModalMessageElements.ModalType)] fade show mx-auto mt-1" role="alert">
+                <div class="alert alert-dismissible alert-@ViewData[nameof(ModalMessageElements.ModalType)].ToString().ToLower() fade show mx-auto mt-1" role="alert">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>@ViewData[nameof(ModalMessageElements.ModalTitle)]</strong> @Html.Raw(ViewData[nameof(ModalMessageElements.ModalBody)])
                 </div>
