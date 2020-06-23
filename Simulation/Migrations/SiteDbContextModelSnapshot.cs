@@ -49,21 +49,21 @@ namespace Simulation.Migrations
                         new
                         {
                             Id = "3B1C34F1-C8E6-4013-AB5F-DF156968DAAE",
-                            ConcurrencyStamp = "00628ebc-f80c-479a-9047-edadffe3e778",
+                            ConcurrencyStamp = "69033593-03ab-40c3-9e55-a4c269592243",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = "81F5E7BF-CAD7-4EEE-8D8B-2ABB2B071849",
-                            ConcurrencyStamp = "b9ca16dc-e5e0-43bc-a50a-230d3bdb30c2",
+                            ConcurrencyStamp = "6aeb476b-bcf2-4cfa-bb02-fbb9e4f9abcc",
                             Name = "Confirmed",
                             NormalizedName = "CONFIRMED"
                         },
                         new
                         {
                             Id = "F090C70C-FFD2-49D2-9C57-A81DF9384206",
-                            ConcurrencyStamp = "ce666b39-ef8e-4581-adb4-ce104c10fcc4",
+                            ConcurrencyStamp = "27c003db-848a-4d20-8d24-57e98730c36c",
                             Name = "Registered",
                             NormalizedName = "REGISTERED"
                         });
@@ -286,8 +286,8 @@ namespace Simulation.Migrations
                         {
                             Id = "A34B367E-7677-4730-BAD0-13A419B0796A",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "951529a3-b818-4e17-b455-59dc28b68657",
-                            ConfirmDate = new DateTime(2020, 6, 13, 15, 22, 42, 865, DateTimeKind.Utc).AddTicks(549),
+                            ConcurrencyStamp = "828a8999-f423-45ad-8a13-63a0e7ace999",
+                            ConfirmDate = new DateTime(2020, 6, 23, 13, 42, 20, 446, DateTimeKind.Utc).AddTicks(1352),
                             Email = "admin@rboard.com",
                             EmailConfirmed = true,
                             FirstName = "Site",
@@ -295,13 +295,13 @@ namespace Simulation.Migrations
                             Locale = "en-us",
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@RBOARD.COM",
-                            NormalizedUserName = "ADMIN@RBOARD.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFiAVPtE9iJtIVFAJ4+As1Lu8WsCQXZ5+/R/Qj7qsO1G/zN9YPeBZAbdoNXLmtKbjw==",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBiZva7I8Bs99w4kap8Do5U9E0HR1bysCSbwXXxOKRytWE15cBUBmvF0/n4TAOzisA==",
                             PhoneNumberConfirmed = false,
-                            RegisterDate = new DateTime(2020, 6, 13, 15, 22, 42, 864, DateTimeKind.Utc).AddTicks(9784),
-                            SecurityStamp = "635588ed-d80b-4e03-96c7-4c98503bbc55",
+                            RegisterDate = new DateTime(2020, 6, 23, 13, 42, 20, 445, DateTimeKind.Utc).AddTicks(7901),
+                            SecurityStamp = "030c6f83-6808-46ec-ab4f-187f5b2fab76",
                             TwoFactorEnabled = false,
-                            UserName = "admin@rboard.com"
+                            UserName = "admin"
                         });
                 });
 

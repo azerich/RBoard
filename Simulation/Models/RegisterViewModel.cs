@@ -10,7 +10,9 @@ namespace Simulation.Models
 {
     public class RegisterViewModel
     {
-
+        [Required]
+        public string UserName { get; set; }
+        
         [Required]
         [UIHint("email")]
         public string Email { get; set; }
