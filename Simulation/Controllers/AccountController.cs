@@ -33,7 +33,7 @@ namespace Simulation.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult Index() => RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
+        public IActionResult Index() => View(nameof(AccountController.AccessDenied));
 
         [AllowAnonymous]
         public IActionResult AccessDenied()
@@ -41,6 +41,7 @@ namespace Simulation.Controllers
             TempData[nameof(ModalMessageElements.ModalType)] = "warning";
             TempData[nameof(ModalMessageElements.ModalTitle)] = "Warning!";
             TempData[nameof(ModalMessageElements.ModalBody)] = "Your are not allowed for this operation!";
+
             return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
         }
 
