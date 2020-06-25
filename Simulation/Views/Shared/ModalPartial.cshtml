@@ -1,5 +1,5 @@
 ﻿@{ 
-    if (TempData.ContainsKey(nameof(ModalMessageElements.ModalType))
+    if (TempData.ContainsKey(nameof(ModalMessageElements.ModalType)))
     {
         ViewData[nameof(ModalMessageElements.ModalType)] = TempData[nameof(ModalMessageElements.ModalType)];
         ViewData[nameof(ModalMessageElements.ModalTitle)] = TempData[nameof(ModalMessageElements.ModalTitle)];

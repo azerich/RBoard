@@ -1,0 +1,31 @@
+﻿namespace Simulation.Data.Enums.Site
+{
+    public enum MessageEventType : int
+    {
+        NoticeTypePrimary,
+        NoticeTypeSecondary,
+        NoticeTypeSuccess,
+        NoticeTypeDanger,
+        NoticeTypeWarning,
+        NoticeTypeInfo,
+        NoticeTypeLight,
+        NoticeTypeDark,
+        YouAreNotAllowedToThisAction,
+        WelcomeBack,
+        Welcome,
+        ThiIsYourFirstAuthorizedVisitToSite,
+        LastTimeYouWereOnTheSiteAt,
+        Warning,
+        WrongPassword,
+        YourEmailIsNotConfirmed,
+        YouMustConfirmItBeforeLogin,
+        UserNotFound,
+        Bye,
+        SeeYouAgain,
+        UserName,
+        IsAlreadyTaken,
+        Email,
+        PasswordMustBeAtLeast,
+        OrMore
+    }
+}

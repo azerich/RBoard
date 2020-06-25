@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Simulation.Data.Entities.System;
-using Simulation.Data.Enums;
+﻿using Simulation.Data.Entities.System;
+using Simulation.Data.Enums.Users;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -55,9 +54,9 @@ namespace Simulation.Models
         [Display(Name ="Birth date")]
         [UIHint("date")]
         public DateTime? BirthDate { get; set; }
-        
+
         [Display(Name = "Language")]
-        public string Locale { get; set; } = "en-us";
+        public LocaleType Locale { get; set; } = LocaleType.en;
         
         [Display(Name = "Register date")]
         public string RegisterDate { get; set; } = DateTime.UtcNow.ToString();

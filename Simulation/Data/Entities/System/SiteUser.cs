@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Simulation.Data.Enums;
+using Simulation.Data.Enums.Users;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Simulation.Data.Entities.System
 {
@@ -15,7 +11,7 @@ namespace Simulation.Data.Entities.System
         public string LastName { get; set; }
         public GenderType? Gender { get; set; }
         public DateTime? BirthDate { get; set; }
-        public string Locale { get; set; } = "en-us";
+        public LocaleType Locale { get; set; } = LocaleType.en;
         public DateTime RegisterDate { get; set; } = DateTime.UtcNow;
         public DateTime? ConfirmDate { get; set; }
         public DateTime? LastLoginDate { get; set; }

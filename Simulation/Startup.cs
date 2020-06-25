@@ -8,6 +8,9 @@ using Microsoft.Extensions.Hosting;
 using NETCore.MailKit.Extensions;
 using NETCore.MailKit.Infrastructure.Internal;
 using Simulation.Data.Entities.System;
+using Simulation.Data.Repository;
+using Simulation.Data.Repository.Abstract;
+using Simulation.Data.Repository.EntityFramework;
 using Simulation.Data.System;
 
 namespace Simulation
@@ -25,6 +28,9 @@ namespace Simulation
 
             services.AddDbContext<SiteDbContext>(
                 options => options.UseSqlServer(SiteConfiguration.ConnectionString));
+
+            services.AddTransient<ILocalizedMessageRepository, EFLocalizedMessageRepository>();
+            services.AddTransient<DataManager>();
 
             services.AddIdentity<SiteUser, IdentityRole>(options =>
             {

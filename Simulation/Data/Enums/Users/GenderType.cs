@@ -1,4 +1,4 @@
-﻿namespace Simulation.Data.Enums
+﻿namespace Simulation.Data.Enums.Users
 {
     public enum GenderType : byte
     {

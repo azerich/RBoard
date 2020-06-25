@@ -1,4 +1,4 @@
-﻿namespace Simulation.Data.Enums
+﻿namespace Simulation.Data.Enums.Site
 {
     public enum ModalMessageElements : int
     {

@@ -10,6 +10,8 @@ namespace Simulation.Data.System
     {
         public SiteDbContext(DbContextOptions<SiteDbContext> options) : base(options) { }
 
+        public DbSet<LocalizedMessage> LocalizedMessages { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

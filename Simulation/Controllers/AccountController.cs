@@ -1,15 +1,17 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using NETCore.MailKit.Core;
 using Simulation.Data.Entities.System;
-using Simulation.Data.Enums;
+using Simulation.Data.Enums.Site;
+using Simulation.Data.Enums.Users;
+using Simulation.Data.Repository;
 using Simulation.Data.System;
 using Simulation.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Data;
+using System.Security.Policy;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -21,26 +23,37 @@ namespace Simulation.Controllers
         private readonly UserManager<SiteUser> userManager;
         private readonly SignInManager<SiteUser> signInManager;
         private readonly IEmailService emailService;
+        private readonly DataManager dataManager;
         public AccountController(
             UserManager<SiteUser> userManager,
             SignInManager<SiteUser> signInManager,
-            IEmailService emailService
+            IEmailService emailService,
+            DataManager dataManager
             )
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.emailService = emailService;
+            this.dataManager = dataManager;
         }
 
         [AllowAnonymous]
         public IActionResult Index() => View(nameof(AccountController.AccessDenied));
 
         [AllowAnonymous]
-        public IActionResult AccessDenied()
+        public async Task<IActionResult> AccessDenied()
         {
+            LocaleType locale;
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                SiteUser user = await userManager.FindByNameAsync(HttpContext.User.Identity.Name).ConfigureAwait(false);
+                locale = user != null ? user.Locale : SiteConfiguration.Locale;
+            }
+            else locale = SiteConfiguration.Locale;
+
             TempData[nameof(ModalMessageElements.ModalType)] = NoticeType.Warning;
-            TempData[nameof(ModalMessageElements.ModalTitle)] = "Warning!";
-            TempData[nameof(ModalMessageElements.ModalBody)] = "Your are not allowed for this operation!";
+            TempData[nameof(ModalMessageElements.ModalTitle)] = await dataManager.LocalizedMessages.GetLocalizedMessage(locale, MessageEventType.Warning).ConfigureAwait(false);
+            TempData[nameof(ModalMessageElements.ModalBody)] = await dataManager.LocalizedMessages.GetLocalizedMessage(locale, MessageEventType.YouAreNotAllowedToThisAction).ConfigureAwait(false);
 
             return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
         }
@@ -74,34 +87,39 @@ namespace Simulation.Controllers
                             TempData[nameof(ToastMessageElements.ToastMessageType)] = NoticeType.Info;
                             TempData[nameof(ToastMessageElements.ToastMessageIcon)] = "fa-info-circle";
                             TempData[nameof(ToastMessageElements.ToastMessageMuted)] = DateTime.UtcNow.ToString("HH:mm");
-                            TempData[nameof(ToastMessageElements.ToastMessageTitle)] = "Welcome back!";
-                            TempData[nameof(ToastMessageElements.ToastMessageBody)] = lastLogin == null ? "Congratulations! This is your first authorized visit to site!" : "Last time you were on the site at " + lastLogin.ToString() + " UTC";
+                            TempData[nameof(ToastMessageElements.ToastMessageTitle)] = 
+                                lastLogin == null ? 
+                                    await dataManager.LocalizedMessages.GetLocalizedMessage(user.Locale, MessageEventType.Welcome).ConfigureAwait(false) 
+                                  : await dataManager.LocalizedMessages.GetLocalizedMessage(user.Locale, MessageEventType.WelcomeBack).ConfigureAwait(false);
+                            TempData[nameof(ToastMessageElements.ToastMessageBody)] =
+                                lastLogin == null ?
+                                    await dataManager.LocalizedMessages.GetLocalizedMessage(user.Locale, MessageEventType.ThiIsYourFirstAuthorizedVisitToSite).ConfigureAwait(false)
+                                  : await dataManager.LocalizedMessages.GetLocalizedMessage(user.Locale, MessageEventType.LastTimeYouWereOnTheSiteAt, lastLogin.ToString()).ConfigureAwait(false);
                             string[] url = returnUrl.ToString().Split('/');
-                            if (url[1].Length > 0) return RedirectToAction(url[1], url[0]);
-                            else return RedirectToAction("", url[0]);
+                            return url[1].Length > 0 ? RedirectToAction(url[1], url[0]) : RedirectToAction("", url[0]);
                         }
                         else
                         {
                             TempData[nameof(ModalMessageElements.ModalType)] = NoticeType.Danger;
-                            TempData[nameof(ModalMessageElements.ModalTitle)] = "Warning!";
-                            TempData[nameof(ModalMessageElements.ModalBody)] = "Wrong password!";
+                            TempData[nameof(ModalMessageElements.ModalTitle)] = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.Warning).ConfigureAwait(false);
+                            TempData[nameof(ModalMessageElements.ModalBody)] = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.WrongPassword).ConfigureAwait(false);
                             return View();
                         }
                     }
                     else
                     {
                         TempData[nameof(ModalMessageElements.ModalType)] = NoticeType.Danger;
-                        TempData[nameof(ModalMessageElements.ModalTitle)] = "Warning!";
-                        TempData[nameof(ModalMessageElements.ModalBody)] = "Your email is not confirmed! <br />";
-                        TempData[nameof(ModalMessageElements.ModalBody)] += "You must confirm it before login!";
+                        TempData[nameof(ModalMessageElements.ModalTitle)] = await dataManager.LocalizedMessages.GetLocalizedMessage(user.Locale, MessageEventType.Warning).ConfigureAwait(false);
+                        TempData[nameof(ModalMessageElements.ModalBody)] = await dataManager.LocalizedMessages.GetLocalizedMessage(user.Locale, MessageEventType.YourEmailIsNotConfirmed, "<br/>").ConfigureAwait(false);
+                        TempData[nameof(ModalMessageElements.ModalBody)] += await dataManager.LocalizedMessages.GetLocalizedMessage(user.Locale, MessageEventType.YouMustConfirmItBeforeLogin).ConfigureAwait(false);
                         return View();
                     }
                 }
                 else
                 {
                     TempData[nameof(ModalMessageElements.ModalType)] = NoticeType.Danger;
-                    TempData[nameof(ModalMessageElements.ModalTitle)] = "Warning!";
-                    TempData[nameof(ModalMessageElements.ModalBody)] = "User not found!";
+                    TempData[nameof(ModalMessageElements.ModalTitle)] = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.Warning).ConfigureAwait(false);
+                    TempData[nameof(ModalMessageElements.ModalBody)] = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.UserNotFound).ConfigureAwait(false);
                     return View();
                 }
             }
@@ -113,12 +131,14 @@ namespace Simulation.Controllers
 
         public async Task<IActionResult> Logout()
         {
-            await signInManager.SignOutAsync().ConfigureAwait(false);
+            SiteUser user = await userManager.FindByNameAsync(HttpContext.User.Identity.Name).ConfigureAwait(false);
+            LocaleType locale = user != null ? user.Locale : SiteConfiguration.Locale;
             TempData[nameof(ToastMessageElements.ToastMessageType)] = NoticeType.Succes;
             TempData[nameof(ToastMessageElements.ToastMessageIcon)] = "fa-info-circle";
             TempData[nameof(ToastMessageElements.ToastMessageMuted)] = DateTime.UtcNow.ToString("HH:mm");
-            TempData[nameof(ToastMessageElements.ToastMessageTitle)] = "Bye!";
-            TempData[nameof(ToastMessageElements.ToastMessageBody)] = "See you again!";
+            TempData[nameof(ToastMessageElements.ToastMessageTitle)] = await dataManager.LocalizedMessages.GetLocalizedMessage(locale, MessageEventType.Bye).ConfigureAwait(false);
+            TempData[nameof(ToastMessageElements.ToastMessageBody)] = await dataManager.LocalizedMessages.GetLocalizedMessage(locale, MessageEventType.SeeYouAgain).ConfigureAwait(false);
+            await signInManager.SignOutAsync().ConfigureAwait(false);
             return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
         }
 
@@ -150,7 +170,7 @@ namespace Simulation.Controllers
         [HttpGet]
         public bool IsPasswordLengthValid(string password)
         {
-            return password.Length >= 8;
+            return password.Length >= SiteConfiguration.PasswordMinLength;
         }
 
         [AllowAnonymous]
@@ -186,9 +206,25 @@ namespace Simulation.Controllers
         {
             bool isValid = false;
             List<string> errorMessages = new List<string>();
-            if(await IsRegisteredUserName(model.UserName).ConfigureAwait(false)) { errorMessages.Add($"User name <b>{model.UserName}</b> is already taken."); }
-            if(await IsRegisteredEmail(model.Email).ConfigureAwait(false)) { errorMessages.Add($"Email <b>{model.Email}</b> is already taken.");}
-            if(!IsPasswordLengthValid(model.Password)) { errorMessages.Add("Password must be <b>8 characters</b> or more."); }
+            if(await IsRegisteredUserName(model.UserName).ConfigureAwait(false)) 
+            {
+                string message = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.UserName, $"<b>{model.UserName}").ConfigureAwait(false);
+                message += " " +await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.IsAlreadyTaken).ConfigureAwait(false);
+                errorMessages.Add(message);
+            }
+            if(await IsRegisteredEmail(model.Email).ConfigureAwait(false))
+            {
+                string message = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.Email, $"<b>{model.Email}</b>").ConfigureAwait(false);
+                message += " " + await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.IsAlreadyTaken).ConfigureAwait(false);
+                errorMessages.Add(message);
+            }
+            if(!IsPasswordLengthValid(model.Password))
+            {
+                string message = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.PasswordMustBeAtLeast, $"<b>{SiteConfiguration.PasswordMinLength.ToString()}</b>").ConfigureAwait(false);
+                message += await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.OrMore).ConfigureAwait(false);
+                errorMessages.Add(message);
+            }
+#warning Complete localization in controller
             if(!IsPasswordContainUpperLetters(model.Password)) { errorMessages.Add("Password must be contain at least one <b>upper letter</b>(e.g. A-Z)."); }
             if(!IsPasswordContainDigit(model.Password)) { errorMessages.Add("Password must be contain at least <b>one digit</b>(e.g. 0-9)."); }
             if(!IsPasswordContainSpecial(model.Password)) { errorMessages.Add("Password must be contain at least <b>one special character</b>(e.g. !@#%&*()_+=;:?.,<>№)."); }
