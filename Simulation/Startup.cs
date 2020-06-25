@@ -82,7 +82,7 @@ namespace Simulation
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => endpoints.MapControllerRoute("default", "{controller=Account}/{action=Profile}/{id?}"));
+            app.UseEndpoints(endpoints => endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}"));
         }
     }
 }

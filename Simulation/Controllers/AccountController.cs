@@ -43,21 +43,9 @@ namespace Simulation.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> AccessDenied()
         {
-            LocaleType locale;
-            if (HttpContext.User.Identity.IsAuthenticated)
-            {
-                SiteUser user = await userManager.FindByNameAsync(HttpContext.User.Identity.Name).ConfigureAwait(false);
-                locale = user != null ? user.Locale : SiteConfiguration.Locale;
-            }
-            else
-            {
-                locale = SiteConfiguration.Locale;
-            }
-
             TempData[nameof(ModalMessageElements.ModalType)] = NoticeType.Warning;
-            TempData[nameof(ModalMessageElements.ModalTitle)] = await dataManager.LocalizedMessages.GetLocalizedMessage(locale, MessageEventType.Warning).ConfigureAwait(false);
-            TempData[nameof(ModalMessageElements.ModalBody)] = await dataManager.LocalizedMessages.GetLocalizedMessage(locale, MessageEventType.YouAreNotAllowedToThisAction).ConfigureAwait(false);
-
+            TempData[nameof(ModalMessageElements.ModalTitle)] = await dataManager.LocalizedMessages.GetLocalizedWord(SiteConfiguration.Locale, StringWords.Warning).ConfigureAwait(false);
+            TempData[nameof(ModalMessageElements.ModalBody)] = await dataManager.LocalizedMessages.GetLocalizedSentence(SiteConfiguration.Locale, StringSentences.YouAreNotAllowed).ConfigureAwait(false);
             return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
         }
 
@@ -90,39 +78,36 @@ namespace Simulation.Controllers
                             TempData[nameof(ToastMessageElements.ToastMessageType)] = NoticeType.Info;
                             TempData[nameof(ToastMessageElements.ToastMessageIcon)] = "fa-info-circle";
                             TempData[nameof(ToastMessageElements.ToastMessageMuted)] = DateTime.UtcNow.ToString("HH:mm");
-                            TempData[nameof(ToastMessageElements.ToastMessageTitle)] =
-                                lastLogin == null ?
-                                    await dataManager.LocalizedMessages.GetLocalizedMessage(user.Locale, MessageEventType.Welcome).ConfigureAwait(false)
-                                  : await dataManager.LocalizedMessages.GetLocalizedMessage(user.Locale, MessageEventType.WelcomeBack).ConfigureAwait(false);
+                            TempData[nameof(ToastMessageElements.ToastMessageTitle)] = await dataManager.LocalizedMessages.GetLocalizedWord(SiteConfiguration.Locale, StringWords.Welcome).ConfigureAwait(false);
                             TempData[nameof(ToastMessageElements.ToastMessageBody)] =
                                 lastLogin == null ?
-                                    await dataManager.LocalizedMessages.GetLocalizedMessage(user.Locale, MessageEventType.ThiIsYourFirstAuthorizedVisitToSite).ConfigureAwait(false)
-                                  : await dataManager.LocalizedMessages.GetLocalizedMessage(user.Locale, MessageEventType.LastTimeYouWereOnTheSiteAt, lastLogin.ToString()).ConfigureAwait(false);
+                                    await dataManager.LocalizedMessages.GetLocalizedSentence(user.Locale, StringSentences.ThiIsYourFirstAuthorizedVisitToSite).ConfigureAwait(false)
+                                  : await dataManager.LocalizedMessages.GetLocalizedSentence(user.Locale, StringSentences.LastTimeYouWereOnTheSiteAt, lastLogin.ToString()).ConfigureAwait(false);
                             string[] url = returnUrl.ToString().Split('/');
-                            return url[1].Length > 0 ? RedirectToAction(url[1], url[0]) : RedirectToAction("", url[0]);
+                            return string.IsNullOrEmpty(url[1]) ? RedirectToAction("", url[0]) : RedirectToAction(url[1], url[0]);
                         }
                         else
                         {
                             TempData[nameof(ModalMessageElements.ModalType)] = NoticeType.Danger;
-                            TempData[nameof(ModalMessageElements.ModalTitle)] = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.Warning).ConfigureAwait(false);
-                            TempData[nameof(ModalMessageElements.ModalBody)] = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.WrongPassword).ConfigureAwait(false);
+                            TempData[nameof(ModalMessageElements.ModalTitle)] = await dataManager.LocalizedMessages.GetLocalizedWord(SiteConfiguration.Locale, StringWords.Warning).ConfigureAwait(false);
+                            TempData[nameof(ModalMessageElements.ModalBody)] = await dataManager.LocalizedMessages.GetLocalizedSentence(SiteConfiguration.Locale, StringSentences.WrongPassword).ConfigureAwait(false);
                             return View();
                         }
                     }
                     else
                     {
                         TempData[nameof(ModalMessageElements.ModalType)] = NoticeType.Danger;
-                        TempData[nameof(ModalMessageElements.ModalTitle)] = await dataManager.LocalizedMessages.GetLocalizedMessage(user.Locale, MessageEventType.Warning).ConfigureAwait(false);
-                        TempData[nameof(ModalMessageElements.ModalBody)] = await dataManager.LocalizedMessages.GetLocalizedMessage(user.Locale, MessageEventType.YourEmailIsNotConfirmed, "<br/>").ConfigureAwait(false);
-                        TempData[nameof(ModalMessageElements.ModalBody)] += await dataManager.LocalizedMessages.GetLocalizedMessage(user.Locale, MessageEventType.YouMustConfirmItBeforeLogin).ConfigureAwait(false);
+                        TempData[nameof(ModalMessageElements.ModalTitle)] = await dataManager.LocalizedMessages.GetLocalizedWord(SiteConfiguration.Locale, StringWords.Warning).ConfigureAwait(false);
+                        TempData[nameof(ModalMessageElements.ModalBody)] = await dataManager.LocalizedMessages.GetLocalizedSentence(SiteConfiguration.Locale, StringSentences.YourEmailIsNotConfirmed, " ").ConfigureAwait(false);
+                        TempData[nameof(ModalMessageElements.ModalBody)] += await dataManager.LocalizedMessages.GetLocalizedSentence(SiteConfiguration.Locale, StringSentences.YouMustConfirmItBeforeLogin).ConfigureAwait(false);
                         return View();
                     }
                 }
                 else
                 {
                     TempData[nameof(ModalMessageElements.ModalType)] = NoticeType.Danger;
-                    TempData[nameof(ModalMessageElements.ModalTitle)] = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.Warning).ConfigureAwait(false);
-                    TempData[nameof(ModalMessageElements.ModalBody)] = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.UserNotFound).ConfigureAwait(false);
+                    TempData[nameof(ModalMessageElements.ModalTitle)] = await dataManager.LocalizedMessages.GetLocalizedWord(SiteConfiguration.Locale, StringWords.Warning).ConfigureAwait(false);
+                    TempData[nameof(ModalMessageElements.ModalBody)] = await dataManager.LocalizedMessages.GetLocalizedSentence(SiteConfiguration.Locale, StringSentences.UserNotFound).ConfigureAwait(false);
                     return View();
                 }
             }
@@ -139,8 +124,8 @@ namespace Simulation.Controllers
             TempData[nameof(ToastMessageElements.ToastMessageType)] = NoticeType.Succes;
             TempData[nameof(ToastMessageElements.ToastMessageIcon)] = "fa-info-circle";
             TempData[nameof(ToastMessageElements.ToastMessageMuted)] = DateTime.UtcNow.ToString("HH:mm");
-            TempData[nameof(ToastMessageElements.ToastMessageTitle)] = await dataManager.LocalizedMessages.GetLocalizedMessage(locale, MessageEventType.Bye).ConfigureAwait(false);
-            TempData[nameof(ToastMessageElements.ToastMessageBody)] = await dataManager.LocalizedMessages.GetLocalizedMessage(locale, MessageEventType.SeeYouAgain).ConfigureAwait(false);
+            TempData[nameof(ToastMessageElements.ToastMessageTitle)] = await dataManager.LocalizedMessages.GetLocalizedWord(SiteConfiguration.Locale, StringWords.Bye).ConfigureAwait(false);
+            TempData[nameof(ToastMessageElements.ToastMessageBody)] = await dataManager.LocalizedMessages.GetLocalizedSentence(SiteConfiguration.Locale, StringSentences.SeeYouAgain).ConfigureAwait(false);
             await signInManager.SignOutAsync().ConfigureAwait(false);
             return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
         }
@@ -211,40 +196,40 @@ namespace Simulation.Controllers
             List<string> errorMessages = new List<string>();
             if (await IsRegisteredUserName(model.UserName).ConfigureAwait(false))
             {
-                string message = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.UserName, $"<b>{model.UserName}").ConfigureAwait(false);
-                message += " " +await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.IsAlreadyTaken).ConfigureAwait(false);
+                string message = await dataManager.LocalizedMessages.GetLocalizedWord(SiteConfiguration.Locale, StringWords.UserName, $"<b>{model.UserName}").ConfigureAwait(false);
+                message += " " +await dataManager.LocalizedMessages.GetLocalizedSentence(SiteConfiguration.Locale, StringSentences.IsAlreadyTaken).ConfigureAwait(false);
                 errorMessages.Add(message);
             }
             if(await IsRegisteredEmail(model.Email).ConfigureAwait(false))
             {
-                string message = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.Email, $"<b>{model.Email}</b>").ConfigureAwait(false);
-                message += " " + await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.IsAlreadyTaken).ConfigureAwait(false);
+                string message = await dataManager.LocalizedMessages.GetLocalizedWord(SiteConfiguration.Locale, StringWords.Email, $"<b>{model.Email}</b>").ConfigureAwait(false);
+                message += " " + await dataManager.LocalizedMessages.GetLocalizedSentence(SiteConfiguration.Locale, StringSentences.IsAlreadyTaken).ConfigureAwait(false);
                 errorMessages.Add(message);
             }
             if(!IsPasswordLengthValid(model.Password))
             {
-                string message = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.PasswordMustBeContainAtLeast, $"<b>{SiteConfiguration.PasswordMinLength}</b>").ConfigureAwait(false);
-                message += await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.OrMore).ConfigureAwait(false);
+                string message = await dataManager.LocalizedMessages.GetLocalizedSentence(SiteConfiguration.Locale, StringSentences.PasswordMustContainAtLeast , $"<b>{SiteConfiguration.PasswordMinLength}</b>").ConfigureAwait(false);
+                message += await dataManager.LocalizedMessages.GetLocalizedSentence(SiteConfiguration.Locale, StringSentences.OrMore).ConfigureAwait(false);
                 errorMessages.Add(message);
             }
             if(!IsPasswordContainUpperLetters(model.Password))
             {
-                string message = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.PasswordMustBeContainAtLeast, "<b>one upper letter</b>").ConfigureAwait(false);
+                string message = await dataManager.LocalizedMessages.GetLocalizedSentence(SiteConfiguration.Locale, StringSentences.PasswordMustContainAtLeast, "<b>one upper letter</b>").ConfigureAwait(false);
                 errorMessages.Add(message);
             }
             if(!IsPasswordContainDigit(model.Password))
             {
-                string message = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.PasswordMustBeContainAtLeast, "<b>one digit</b>").ConfigureAwait(false);
+                string message = await dataManager.LocalizedMessages.GetLocalizedSentence(SiteConfiguration.Locale, StringSentences.PasswordMustContainAtLeast, "<b>one digit</b>").ConfigureAwait(false);
                 errorMessages.Add(message);
             }
             if(!IsPasswordContainSpecial(model.Password))
             {
-                string message = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.PasswordMustBeContainAtLeast, "<b>one special character</b>").ConfigureAwait(false);
+                string message = await dataManager.LocalizedMessages.GetLocalizedSentence(SiteConfiguration.Locale, StringSentences.PasswordMustContainAtLeast, "<b>one special character</b>").ConfigureAwait(false);
                 errorMessages.Add(message);
             }
             if(model.Password != model.ConfirmedPassword)
             {
-                string message = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.PasswordMismatch).ConfigureAwait(false);
+                string message = await dataManager.LocalizedMessages.GetLocalizedSentence(SiteConfiguration.Locale, StringSentences.PasswordsMismatch).ConfigureAwait(false);
                 errorMessages.Add(message);
             }
 
@@ -273,22 +258,22 @@ namespace Simulation.Controllers
                         );
                     await emailService.SendAsync(user.Email, "[RBoard] Email verification", $"Follow <a href=\"{link}\" target=\"_blank\">this link</a> to verify your email on site.", true).ConfigureAwait(false);
                     TempData[nameof(ModalMessageElements.ModalType)] = NoticeType.Succes;
-                    TempData[nameof(ModalMessageElements.ModalTitle)] = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.NoticeTypeSuccess).ConfigureAwait(false);
-                    TempData[nameof(ModalMessageElements.ModalBody)] = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.WeSendToYourEmailVerificationCode).ConfigureAwait(false);
+                    TempData[nameof(ModalMessageElements.ModalTitle)] = await dataManager.LocalizedMessages.GetLocalizedWord(SiteConfiguration.Locale, StringWords.Success).ConfigureAwait(false);
+                    TempData[nameof(ModalMessageElements.ModalBody)] = await dataManager.LocalizedMessages.GetLocalizedSentence(SiteConfiguration.Locale, StringSentences.VerificationCodeSendedToEmail).ConfigureAwait(false);
                     return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
                 }
                 else
                 {
                     TempData[nameof(ModalMessageElements.ModalType)] = NoticeType.Danger;
-                    TempData[nameof(ModalMessageElements.ModalTitle)] = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.NoticeTypeWarning).ConfigureAwait(false);
-                    TempData[nameof(ModalMessageElements.ModalBody)] = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.CanNotCreateAUser).ConfigureAwait(false);
+                    TempData[nameof(ModalMessageElements.ModalTitle)] = await dataManager.LocalizedMessages.GetLocalizedWord(SiteConfiguration.Locale, StringWords.Warning).ConfigureAwait(false);
+                    TempData[nameof(ModalMessageElements.ModalBody)] = await dataManager.LocalizedMessages.GetLocalizedSentence(SiteConfiguration.Locale, StringSentences.CanNotCreateAUser).ConfigureAwait(false);
                     return View(model);
                 }
             }
             else
             {
                 TempData[nameof(ModalMessageElements.ModalType)] = NoticeType.Danger;
-                TempData[nameof(ModalMessageElements.ModalTitle)] = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.NoticeTypeWarning).ConfigureAwait(false);
+                TempData[nameof(ModalMessageElements.ModalTitle)] = await dataManager.LocalizedMessages.GetLocalizedWord(SiteConfiguration.Locale, StringWords.Warning).ConfigureAwait(false);
                 TempData[nameof(ModalMessageElements.ModalBody)] = "<ul>";
                 foreach (string error in errorMessages)
                 {
@@ -312,23 +297,23 @@ namespace Simulation.Controllers
                     TempData[nameof(ToastMessageElements.ToastMessageType)] = NoticeType.Succes;
                     TempData[nameof(ToastMessageElements.ToastMessageIcon)] = "fa-info-circle";
                     TempData[nameof(ToastMessageElements.ToastMessageMuted)] = DateTime.UtcNow.ToString("HH:mm");
-                    TempData[nameof(ToastMessageElements.ToastMessageTitle)] = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.NoticeTypeSuccess).ConfigureAwait(false);
-                    TempData[nameof(ToastMessageElements.ToastMessageBody)] = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.YourEmailIsConfirmed).ConfigureAwait(false);
+                    TempData[nameof(ToastMessageElements.ToastMessageTitle)] = await dataManager.LocalizedMessages.GetLocalizedWord(SiteConfiguration.Locale, StringWords.Success).ConfigureAwait(false);
+                    TempData[nameof(ToastMessageElements.ToastMessageBody)] = await dataManager.LocalizedMessages.GetLocalizedSentence(SiteConfiguration.Locale, StringSentences.YourEmailIsConfirmed).ConfigureAwait(false);
                     return RedirectToAction(nameof(AccountController.Login), nameof(AccountController).CutController());
                 }
                 else
                 {
                     TempData[nameof(ModalMessageElements.ModalType)] = NoticeType.Danger;
-                    TempData[nameof(ModalMessageElements.ModalTitle)] = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.NoticeTypeWarning).ConfigureAwait(false);
-                    TempData[nameof(ModalMessageElements.ModalBody)] = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.WrongEmailVerificationCode).ConfigureAwait(false);
+                    TempData[nameof(ModalMessageElements.ModalTitle)] = await dataManager.LocalizedMessages.GetLocalizedWord(SiteConfiguration.Locale, StringWords.Warning).ConfigureAwait(false);
+                    TempData[nameof(ModalMessageElements.ModalBody)] = await dataManager.LocalizedMessages.GetLocalizedSentence(SiteConfiguration.Locale, StringSentences.WrongEmailVerificationCode).ConfigureAwait(false);
                     return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
                 }
             }
             else
             {
                 TempData[nameof(ModalMessageElements.ModalType)] = NoticeType.Danger;
-                TempData[nameof(ModalMessageElements.ModalTitle)] = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.NoticeTypeWarning).ConfigureAwait(false);
-                TempData[nameof(ModalMessageElements.ModalBody)] = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.WrongUserCredentialsToVerifyYourEmail).ConfigureAwait(false);
+                TempData[nameof(ModalMessageElements.ModalTitle)] = await dataManager.LocalizedMessages.GetLocalizedWord(SiteConfiguration.Locale, StringWords.Warning).ConfigureAwait(false);
+                TempData[nameof(ModalMessageElements.ModalBody)] = await dataManager.LocalizedMessages.GetLocalizedSentence(SiteConfiguration.Locale, StringSentences.WrongUserCredentialsToVerifyYourEmail).ConfigureAwait(false);
                 return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
             }
         }
@@ -344,8 +329,8 @@ namespace Simulation.Controllers
                     if(user == null)
                     {
                         TempData[nameof(ModalMessageElements.ModalType)] = NoticeType.Danger;
-                        TempData[nameof(ModalMessageElements.ModalTitle)] = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.NoticeTypeWarning).ConfigureAwait(false);
-                        TempData[nameof(ModalMessageElements.ModalBody)] = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.SiteError).ConfigureAwait(false);
+                        TempData[nameof(ModalMessageElements.ModalTitle)] = await dataManager.LocalizedMessages.GetLocalizedWord(SiteConfiguration.Locale, StringWords.Warning).ConfigureAwait(false);
+                        TempData[nameof(ModalMessageElements.ModalBody)] = await dataManager.LocalizedMessages.GetLocalizedSentence(SiteConfiguration.Locale, StringSentences.SiteError).ConfigureAwait(false);
                         return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
                     }
                     else
@@ -365,8 +350,8 @@ namespace Simulation.Controllers
                     else
                     {
                         TempData[nameof(ModalMessageElements.ModalType)] = NoticeType.Warning;
-                        TempData[nameof(ModalMessageElements.ModalTitle)] = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.NoticeTypeWarning).ConfigureAwait(false);
-                        TempData[nameof(ModalMessageElements.ModalBody)] = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.UserNotFound).ConfigureAwait(false);
+                        TempData[nameof(ModalMessageElements.ModalTitle)] = await dataManager.LocalizedMessages.GetLocalizedWord(SiteConfiguration.Locale, StringWords.Warning).ConfigureAwait(false);
+                        TempData[nameof(ModalMessageElements.ModalBody)] = await dataManager.LocalizedMessages.GetLocalizedSentence(SiteConfiguration.Locale, StringSentences.UserNotFound).ConfigureAwait(false);
                         return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
                     }
                 }
@@ -388,8 +373,8 @@ namespace Simulation.Controllers
                     else
                     {
                         TempData[nameof(ModalMessageElements.ModalType)] = NoticeType.Warning;
-                        TempData[nameof(ModalMessageElements.ModalTitle)] = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.NoticeTypeWarning).ConfigureAwait(false);
-                        TempData[nameof(ModalMessageElements.ModalBody)] = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.UserNotFound).ConfigureAwait(false);
+                        TempData[nameof(ModalMessageElements.ModalTitle)] = await dataManager.LocalizedMessages.GetLocalizedWord(SiteConfiguration.Locale, StringWords.Warning).ConfigureAwait(false);
+                        TempData[nameof(ModalMessageElements.ModalBody)] = await dataManager.LocalizedMessages.GetLocalizedSentence(SiteConfiguration.Locale, StringSentences.UserNotFound).ConfigureAwait(false);
                         return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
                     }
                 }
@@ -409,8 +394,8 @@ namespace Simulation.Controllers
             TempData[nameof(ToastMessageElements.ToastMessageType)] = NoticeType.Info;
             TempData[nameof(ToastMessageElements.ToastMessageIcon)] = "fa-info-circle";
             TempData[nameof(ToastMessageElements.ToastMessageMuted)] = DateTime.UtcNow.ToString("HH:mm");
-            TempData[nameof(ToastMessageElements.ToastMessageTitle)] = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.NoticeTypeInfo).ConfigureAwait(false);
-            TempData[nameof(ToastMessageElements.ToastMessageBody)] = await dataManager.LocalizedMessages.GetLocalizedMessage(SiteConfiguration.Locale, MessageEventType.AccountDeleted).ConfigureAwait(false);
+            TempData[nameof(ToastMessageElements.ToastMessageTitle)] = await dataManager.LocalizedMessages.GetLocalizedWord(SiteConfiguration.Locale, StringWords.Info).ConfigureAwait(false);
+            TempData[nameof(ToastMessageElements.ToastMessageBody)] = await dataManager.LocalizedMessages.GetLocalizedSentence(SiteConfiguration.Locale, StringSentences.AccountDeleted).ConfigureAwait(false);
             return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
         }
     }

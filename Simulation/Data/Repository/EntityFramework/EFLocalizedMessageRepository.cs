@@ -16,11 +16,19 @@ namespace Simulation.Data.Repository.EntityFramework
         private readonly SiteDbContext context;
         public EFLocalizedMessageRepository(SiteDbContext context) => this.context = context;
 
-        public async Task<string> GetLocalizedMessage(LocaleType locale, MessageEventType messageEvent, string appendix = null)
+        public async Task<string> GetLocalizedWord(LocaleType locale, StringWords word, string appendix = null)
         {
-            LocalizedMessage result = await context.LocalizedMessages.FirstOrDefaultAsync(entity => entity.Locale == locale && entity.MessageEvent == messageEvent).ConfigureAwait(false);
+            LocalizedMessage result = await context.LocalizedMessages.FirstOrDefaultAsync(entity => entity.Locale == locale && entity.Word == word).ConfigureAwait(false);
 
             if (string.IsNullOrEmpty(result.Message)) return "This message is not localized";
+            else return appendix == null ? result.Message : result.Message + " " + appendix;
+        }
+        public async Task<string> GetLocalizedSentence(LocaleType locale, StringSentences sentence, string appendix = null)
+        {
+            LocalizedMessage result = await context.LocalizedMessages.FirstOrDefaultAsync(entity => entity.Locale == locale && entity.Sentence == sentence).ConfigureAwait(false);
+
+            if (string.IsNullOrEmpty(result.Message)) return "This message is not localized";
+            else if (appendix == " ") return result.Message + appendix;
             else return appendix == null ? result.Message : result.Message + " " + appendix;
         }
         public async Task<bool> SaveLocalizedMessage(LocalizedMessage entity)
@@ -38,29 +46,6 @@ namespace Simulation.Data.Repository.EntityFramework
             {
                 return false;
             }
-        }
-        public async Task<List<LocalizedMessage>> GetAllNonEmptyLocalizedMessagesInLocale(LocaleType locale)
-        {
-            return await context.LocalizedMessages.Where(entity => entity.Locale == locale).ToListAsync().ConfigureAwait(false);
-        }
-        public async Task<IQueryable<LocalizedMessage>> GetAllEmptyLocalizedMessagesInLocale(LocaleType locale)
-        {
-            List<LocalizedMessage> result = new List<LocalizedMessage>();
-            foreach (MessageEventType item in Enum.GetValues(typeof(MessageEventType)))
-            {
-                LocalizedMessage localizedMessage = await context.LocalizedMessages.FirstOrDefaultAsync(entity => entity.Locale == locale && entity.MessageEvent == item).ConfigureAwait(false);
-                if (localizedMessage == null)
-                {
-                    LocalizedMessage entry = new LocalizedMessage()
-                    {
-                        Locale = locale,
-                        MessageEvent = item,
-                        Message = "This message is not localized"
-                    };
-                    result.Add(entry);
-                }
-            }
-            return (IQueryable<LocalizedMessage>)result;
         }
         public async Task<bool> DeleteLocalizedMessage(Guid entityId)
         {

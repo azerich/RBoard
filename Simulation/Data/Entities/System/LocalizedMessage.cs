@@ -12,7 +12,8 @@ namespace Simulation.Data.Entities.System
     {
         public Guid Id { get; set; }
         public LocaleType Locale { get; set; }
-        public MessageEventType MessageEvent { get; set; }
+        public StringWords Word { get; set; }
+        public StringSentences Sentence { get; set; }
         public string Message { get; set; } = "Not localized";
     }
 }
