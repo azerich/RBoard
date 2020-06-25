@@ -24,7 +24,7 @@ namespace Simulation
         }
         public void ConfigureServices(IServiceCollection services)
         {
-            Configuration.Bind("Database", new SiteConfiguration());
+            Configuration.Bind("RBoard", new SiteConfiguration());
 
             services.AddDbContext<SiteDbContext>(
                 options => options.UseSqlServer(SiteConfiguration.ConnectionString));

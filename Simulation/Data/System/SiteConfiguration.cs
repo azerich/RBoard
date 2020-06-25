@@ -1,4 +1,5 @@
-﻿using Simulation.Data.Enums.Users;
+﻿using Microsoft.AspNetCore.Http;
+using Simulation.Data.Enums.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace Simulation.Data.System
     public sealed class SiteConfiguration
     {
         public static string ConnectionString { get; set; }
-        public static LocaleType Locale { get; set; } = LocaleType.en;
         public static int PasswordMinLength { get; set; } = 8;
+        public static LocaleType Locale { get; set; } = LocaleType.en;
     }
 }

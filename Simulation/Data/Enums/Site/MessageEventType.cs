@@ -25,7 +25,15 @@
         UserName,
         IsAlreadyTaken,
         Email,
-        PasswordMustBeAtLeast,
-        OrMore
+        OrMore,
+        PasswordMustBeContainAtLeast,
+        PasswordMismatch,
+        WeSendToYourEmailVerificationCode,
+        CanNotCreateAUser,
+        YourEmailIsConfirmed,
+        WrongEmailVerificationCode,
+        WrongUserCredentialsToVerifyYourEmail,
+        SiteError,
+        AccountDeleted
     }
 }

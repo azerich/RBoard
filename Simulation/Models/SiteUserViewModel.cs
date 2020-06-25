@@ -57,10 +57,10 @@ namespace Simulation.Models
 
         [Display(Name = "Language")]
         public LocaleType Locale { get; set; } = LocaleType.en;
-        
+
         [Display(Name = "Register date")]
         public string RegisterDate { get; set; } = DateTime.UtcNow.ToString();
-        
+
         [Display(Name = "Confirm date")]
         public string ConfirmDate { get; set; }
 

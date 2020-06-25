@@ -23,7 +23,6 @@ namespace Simulation.Data.Repository.EntityFramework
             if (string.IsNullOrEmpty(result.Message)) return "This message is not localized";
             else return appendix == null ? result.Message : result.Message + " " + appendix;
         }
-
         public async Task<bool> SaveLocalizedMessage(LocalizedMessage entity)
         {
             if (entity.Id == default)
@@ -42,7 +41,7 @@ namespace Simulation.Data.Repository.EntityFramework
         }
         public async Task<List<LocalizedMessage>> GetAllNonEmptyLocalizedMessagesInLocale(LocaleType locale)
         {
-            return await context.LocalizedMessages.Where(entity => entity.Locale == locale).ToListAsync();
+            return await context.LocalizedMessages.Where(entity => entity.Locale == locale).ToListAsync().ConfigureAwait(false);
         }
         public async Task<IQueryable<LocalizedMessage>> GetAllEmptyLocalizedMessagesInLocale(LocaleType locale)
         {
