@@ -1,0 +1,11 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    @await Html.PartialAsync("MetaPartial").ConfigureAwait(false)
+    @await Html.PartialAsync("CssPartial").ConfigureAwait(false)
+</head>
+<body>
+
+    @await Html.PartialAsync("ScriptsPartial").ConfigureAwait(false) 
+</body>
+</html>

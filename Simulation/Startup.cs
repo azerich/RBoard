@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.CodeAnalysis.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +14,7 @@ using Simulation.Data.Repository;
 using Simulation.Data.Repository.Abstract;
 using Simulation.Data.Repository.EntityFramework;
 using Simulation.Data.System;
+using System.Security.Claims;
 
 namespace Simulation
 {
@@ -29,13 +32,16 @@ namespace Simulation
             services.AddDbContext<SiteDbContext>(
                 options => options.UseSqlServer(SiteConfiguration.ConnectionString));
 
+            services.AddScoped<IHttpContextAccessor, HttpContextAccessor>();
+
             services.AddTransient<ILocalizedMessageRepository, EFLocalizedMessageRepository>();
             services.AddTransient<DataManager>();
 
             services.AddIdentity<SiteUser, IdentityRole>(options =>
             {
                 options.User.RequireUniqueEmail = true;
-                options.Password.RequiredLength = 8;
+                options.SignIn.RequireConfirmedEmail = true;
+                options.Password.RequiredLength = SiteConfiguration.PasswordMinLength;
             })
                 .AddEntityFrameworkStores<SiteDbContext>()
                 .AddDefaultTokenProviders();
@@ -44,6 +50,7 @@ namespace Simulation
             {
                 options.Cookie.Name = "RBoard.Cookie";
                 options.LoginPath = "/account/login";
+                options.LogoutPath = "/account/logout";
                 options.AccessDeniedPath = "/account/accessdenied";
                 options.SlidingExpiration = true;
                 options.Cookie.HttpOnly = true;
@@ -51,6 +58,7 @@ namespace Simulation
 
             services.AddAuthorization(config =>
             {
+                //config.AddPolicy("Locale", policyBuilder => policyBuilder.RequireClaim(ClaimTypes.Locality));
                 config.AddPolicy("Registered", policyBuilder => policyBuilder.RequireRole("Registered"));
                 config.AddPolicy("Confirmed", policyBuilder => policyBuilder.RequireRole("Confirmed"));
                 config.AddPolicy("Administrator", policyBuilder => policyBuilder.RequireRole("Administrator"));

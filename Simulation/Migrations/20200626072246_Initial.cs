@@ -181,52 +181,52 @@ namespace Simulation.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "3B1C34F1-C8E6-4013-AB5F-DF156968DAAE", "48bd3fe2-49d4-4c01-97af-efeeb7e6296b", "Administrator", "ADMINISTRATOR" },
-                    { "81F5E7BF-CAD7-4EEE-8D8B-2ABB2B071849", "59d87a82-abde-4685-9102-cba2c9daa1b9", "Confirmed", "CONFIRMED" },
-                    { "F090C70C-FFD2-49D2-9C57-A81DF9384206", "1f2d9d1b-eb7c-4b88-98df-2d3705103618", "Registered", "REGISTERED" }
+                    { "3B1C34F1-C8E6-4013-AB5F-DF156968DAAE", "bce43806-eb2b-4748-b7b7-cbaddb6e75ce", "Administrator", "ADMINISTRATOR" },
+                    { "81F5E7BF-CAD7-4EEE-8D8B-2ABB2B071849", "057b9494-ace3-46bb-877d-d55336620f98", "Confirmed", "CONFIRMED" },
+                    { "F090C70C-FFD2-49D2-9C57-A81DF9384206", "537f5b9d-2aa2-4ed4-8f71-4ec65747de3e", "Registered", "REGISTERED" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "BirthDate", "ConcurrencyStamp", "ConfirmDate", "Email", "EmailConfirmed", "FirstName", "Gender", "LastLoginDate", "LastName", "Locale", "LockoutEnabled", "LockoutEnd", "MiddleName", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RegisterDate", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "A34B367E-7677-4730-BAD0-13A419B0796A", 0, null, "48ce8ee8-f6d9-452c-8859-6d11719d6258", new DateTime(2020, 6, 25, 19, 42, 22, 405, DateTimeKind.Utc).AddTicks(191), "admin@rboard.com", true, "Site", null, null, "Administrator", 0, false, null, null, "ADMIN@RBOARD.COM", "ADMIN", "AQAAAAEAACcQAAAAEOF2/uktz1iUg8kxQdr8/XCxg4Redt7pg/GyQPY0wcteIZ+a5Zg5C482RngRvYDNeQ==", null, false, new DateTime(2020, 6, 25, 19, 42, 22, 404, DateTimeKind.Utc).AddTicks(9012), "d3dbd471-1332-4b00-9f06-b3e87c624a13", false, "admin" });
+                values: new object[] { "A34B367E-7677-4730-BAD0-13A419B0796A", 0, null, "a825bd58-1cb0-411c-a9e8-a430117a3767", new DateTime(2020, 6, 26, 7, 22, 44, 430, DateTimeKind.Utc).AddTicks(5112), "admin@rboard.com", true, "Site", null, null, "Administrator", 0, false, null, null, "ADMIN@RBOARD.COM", "ADMIN", "AQAAAAEAACcQAAAAEFBcd5Nh/zijOC+1cfYEzkZEafuY9Q7EytWf4cj4jSABSOPWTCVfBivAeSpUITRCuw==", null, false, new DateTime(2020, 6, 26, 7, 22, 44, 430, DateTimeKind.Utc).AddTicks(2262), "85e02a8a-11d3-4386-a295-98d39aebbc28", false, "admin" });
 
             migrationBuilder.InsertData(
                 table: "LocalizedMessages",
                 columns: new[] { "Id", "Locale", "Message", "Sentence", "Word" },
                 values: new object[,]
                 {
-                    { new Guid("bf562d8b-b10f-47de-95e1-1cdb8dd236d5"), 0, "Danger", 0, 1 },
-                    { new Guid("02d3ee00-2f51-4d89-8699-9ba120c26d18"), 0, "Your Email is confirmed", 17, 0 },
-                    { new Guid("aa5b2b3f-a6b3-49c3-99d5-cca871f6a53f"), 0, "You must confirm it before login", 16, 0 },
-                    { new Guid("a22aa690-5b3d-4445-8de4-4b742a2fedbe"), 0, "You are not allowed", 15, 0 },
-                    { new Guid("4dfdaff6-603e-4859-bef7-0b33d7d74bf8"), 0, "Wrong user credentials to verify your email", 14, 0 },
-                    { new Guid("afe92478-a9e0-4422-88bd-f206e9ab5db5"), 0, "Wrong password", 13, 0 },
-                    { new Guid("e526e4e8-f85e-4467-b58d-9c1c2f042315"), 0, "Wrong Email verification code", 12, 0 },
-                    { new Guid("b0e6ed47-9b54-4936-af41-200c22bd819a"), 0, "Verification code successfully send to your email", 11, 0 },
-                    { new Guid("f180937d-d98a-4660-bc82-41dce5966b5b"), 0, "User not found", 10, 0 },
-                    { new Guid("c696cf4e-7a29-41fb-97aa-cf94e78773ee"), 0, "This is your first authorized visit to site", 9, 0 },
-                    { new Guid("eea5c066-842b-4608-bfec-d706e1ece19c"), 0, "Site error", 8, 0 },
-                    { new Guid("b0ababd4-fcd0-43f9-8669-86815f95e700"), 0, "See you again", 7, 0 },
-                    { new Guid("7f7cf1a6-0bf0-4378-baee-6146ce977489"), 0, "Passwords mismatch", 6, 0 },
-                    { new Guid("d30fcd3d-c26d-4b2c-968d-08ad0888f76f"), 0, "Password must contain at least", 5, 0 },
-                    { new Guid("b2ea1dab-1924-4ea6-9e43-a0194e21855d"), 0, "Bye", 0, 0 },
-                    { new Guid("eb1d39ab-6946-4654-a2b7-d31da9a0b4bb"), 0, "or more", 4, 0 },
-                    { new Guid("53704287-05c8-4a2c-8a8b-62d6f8d7a35b"), 0, "Your Email is not confirmed", 18, 0 },
-                    { new Guid("aedbc25c-bb65-4f14-92ea-d7c91206e9e4"), 0, "Can not create a user", 1, 0 },
-                    { new Guid("fe54e1f3-7707-4d81-9412-c0f8a847d176"), 0, "Account deleted", 0, 0 },
-                    { new Guid("4f1c35ec-0bfc-44d7-b018-84353763f10e"), 0, "Welcome", 0, 11 },
-                    { new Guid("bc26e07b-9a27-4a39-af0d-472373015a0f"), 0, "Warning", 0, 10 },
-                    { new Guid("05da1568-92e2-4c13-8fb3-875b47ff7d99"), 0, "User name", 0, 9 },
-                    { new Guid("575a4a2d-c1a3-4126-bcf1-d5dc8493c7a4"), 0, "Success", 0, 8 },
-                    { new Guid("6c2e94a9-0fde-4114-91ee-5d9c50251fe5"), 0, "Secondary", 0, 7 },
-                    { new Guid("30505114-973a-4f4e-bd98-ec28fd757a7c"), 0, "Primary", 0, 6 },
-                    { new Guid("c9f5b633-7be0-4dfd-bba4-03d1d8ee6d66"), 0, "Tip", 0, 5 },
-                    { new Guid("672ba02a-a64f-40a8-b73f-a72c22542300"), 0, "Information", 0, 4 },
-                    { new Guid("e8bbb596-cadf-41d2-872c-a0d6c63002ba"), 0, "Email", 0, 3 },
-                    { new Guid("087620e1-d585-4259-98b2-87801c9af9b2"), 0, "Dark", 0, 2 },
-                    { new Guid("d7290a7f-4053-4765-92bd-9fda5d725efc"), 0, "Last time you were on the site is", 3, 0 },
-                    { new Guid("8f858baa-2846-4611-91f8-df3d253f7a67"), 0, "is already taken", 2, 0 }
+                    { new Guid("bf562d8b-b10f-47de-95e1-1cdb8dd236d5"), 0, "Danger", -1, 1 },
+                    { new Guid("02d3ee00-2f51-4d89-8699-9ba120c26d18"), 0, "Your Email is confirmed", 17, -1 },
+                    { new Guid("aa5b2b3f-a6b3-49c3-99d5-cca871f6a53f"), 0, "You must confirm it before login", 16, -1 },
+                    { new Guid("a22aa690-5b3d-4445-8de4-4b742a2fedbe"), 0, "You are not allowed", 15, -1 },
+                    { new Guid("4dfdaff6-603e-4859-bef7-0b33d7d74bf8"), 0, "Wrong user credentials to verify your email", 14, -1 },
+                    { new Guid("afe92478-a9e0-4422-88bd-f206e9ab5db5"), 0, "Wrong password", 13, -1 },
+                    { new Guid("e526e4e8-f85e-4467-b58d-9c1c2f042315"), 0, "Wrong Email verification code", 12, -1 },
+                    { new Guid("b0e6ed47-9b54-4936-af41-200c22bd819a"), 0, "Verification code successfully send to your email", 11, -1 },
+                    { new Guid("f180937d-d98a-4660-bc82-41dce5966b5b"), 0, "User not found", 10, -1 },
+                    { new Guid("c696cf4e-7a29-41fb-97aa-cf94e78773ee"), 0, "This is your first authorized visit to site", 9, -1 },
+                    { new Guid("eea5c066-842b-4608-bfec-d706e1ece19c"), 0, "Site error", 8, -1 },
+                    { new Guid("b0ababd4-fcd0-43f9-8669-86815f95e700"), 0, "See you again", 7, -1 },
+                    { new Guid("7f7cf1a6-0bf0-4378-baee-6146ce977489"), 0, "Passwords mismatch", 6, -1 },
+                    { new Guid("d30fcd3d-c26d-4b2c-968d-08ad0888f76f"), 0, "Password must contain at least", 5, -1 },
+                    { new Guid("b2ea1dab-1924-4ea6-9e43-a0194e21855d"), 0, "Bye", -1, 0 },
+                    { new Guid("eb1d39ab-6946-4654-a2b7-d31da9a0b4bb"), 0, "or more", 4, -1 },
+                    { new Guid("53704287-05c8-4a2c-8a8b-62d6f8d7a35b"), 0, "Your Email is not confirmed", 18, -1 },
+                    { new Guid("aedbc25c-bb65-4f14-92ea-d7c91206e9e4"), 0, "Can not create a user", 1, -1 },
+                    { new Guid("fe54e1f3-7707-4d81-9412-c0f8a847d176"), 0, "Account deleted", 0, -1 },
+                    { new Guid("4f1c35ec-0bfc-44d7-b018-84353763f10e"), 0, "Welcome", -1, 11 },
+                    { new Guid("bc26e07b-9a27-4a39-af0d-472373015a0f"), 0, "Warning", -1, 10 },
+                    { new Guid("05da1568-92e2-4c13-8fb3-875b47ff7d99"), 0, "User name", -1, 9 },
+                    { new Guid("575a4a2d-c1a3-4126-bcf1-d5dc8493c7a4"), 0, "Success", -1, 8 },
+                    { new Guid("6c2e94a9-0fde-4114-91ee-5d9c50251fe5"), 0, "Secondary", -1, 7 },
+                    { new Guid("30505114-973a-4f4e-bd98-ec28fd757a7c"), 0, "Primary", -1, 6 },
+                    { new Guid("c9f5b633-7be0-4dfd-bba4-03d1d8ee6d66"), 0, "Tip", -1, 5 },
+                    { new Guid("672ba02a-a64f-40a8-b73f-a72c22542300"), 0, "Information", -1, 4 },
+                    { new Guid("e8bbb596-cadf-41d2-872c-a0d6c63002ba"), 0, "Email", -1, 3 },
+                    { new Guid("087620e1-d585-4259-98b2-87801c9af9b2"), 0, "Dark", -1, 2 },
+                    { new Guid("d7290a7f-4053-4765-92bd-9fda5d725efc"), 0, "Last time you were on the site is", 3, -1 },
+                    { new Guid("8f858baa-2846-4611-91f8-df3d253f7a67"), 0, "is already taken", 2, -1 }
                 });
 
             migrationBuilder.InsertData(

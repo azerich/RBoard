@@ -1,15 +1,5 @@
 ﻿@model LoginViewModel
-@{
-    Layout = null; ;
-}
-<!doctype html>
-<html>
-<head>
-    @await Html.PartialAsync("MetaPartial")
-    @await Html.PartialAsync("CssPartial")
-</head>
-<body>
-    @await Html.PartialAsync("ModalPartial") 
+
     <div class="container border rounded-sm mt-5 ml-auto" style="min-width:300px; max-width:450px;">
         <a class="close" aria-label="Close" asp-area="" asp-controller="Home" asp-action="Index">
             <span aria-hidden="true">
@@ -49,7 +39,3 @@
             <p class="mt-5 mb-3 text-muted text-center">&copy; RBoard</p>
         </form>
     </div>
-
-    @await Html.PartialAsync("ScriptsPartial")
-</body>
-</html>

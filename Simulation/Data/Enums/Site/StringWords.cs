@@ -2,6 +2,7 @@
 {
     public enum StringWords : int
     {
+        IsNull = -1,
         Bye,
         Danger,
         Dark,

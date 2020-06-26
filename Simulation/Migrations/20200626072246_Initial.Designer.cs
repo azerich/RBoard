@@ -10,7 +10,7 @@ using Simulation.Data.System;
 namespace Simulation.Migrations
 {
     [DbContext(typeof(SiteDbContext))]
-    [Migration("20200625194222_Initial")]
+    [Migration("20200626072246_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,21 +51,21 @@ namespace Simulation.Migrations
                         new
                         {
                             Id = "3B1C34F1-C8E6-4013-AB5F-DF156968DAAE",
-                            ConcurrencyStamp = "48bd3fe2-49d4-4c01-97af-efeeb7e6296b",
+                            ConcurrencyStamp = "bce43806-eb2b-4748-b7b7-cbaddb6e75ce",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = "81F5E7BF-CAD7-4EEE-8D8B-2ABB2B071849",
-                            ConcurrencyStamp = "59d87a82-abde-4685-9102-cba2c9daa1b9",
+                            ConcurrencyStamp = "057b9494-ace3-46bb-877d-d55336620f98",
                             Name = "Confirmed",
                             NormalizedName = "CONFIRMED"
                         },
                         new
                         {
                             Id = "F090C70C-FFD2-49D2-9C57-A81DF9384206",
-                            ConcurrencyStamp = "1f2d9d1b-eb7c-4b88-98df-2d3705103618",
+                            ConcurrencyStamp = "537f5b9d-2aa2-4ed4-8f71-4ec65747de3e",
                             Name = "Registered",
                             NormalizedName = "REGISTERED"
                         });
@@ -220,7 +220,7 @@ namespace Simulation.Migrations
                             Id = new Guid("b2ea1dab-1924-4ea6-9e43-a0194e21855d"),
                             Locale = 0,
                             Message = "Bye",
-                            Sentence = 0,
+                            Sentence = -1,
                             Word = 0
                         },
                         new
@@ -228,7 +228,7 @@ namespace Simulation.Migrations
                             Id = new Guid("bf562d8b-b10f-47de-95e1-1cdb8dd236d5"),
                             Locale = 0,
                             Message = "Danger",
-                            Sentence = 0,
+                            Sentence = -1,
                             Word = 1
                         },
                         new
@@ -236,7 +236,7 @@ namespace Simulation.Migrations
                             Id = new Guid("087620e1-d585-4259-98b2-87801c9af9b2"),
                             Locale = 0,
                             Message = "Dark",
-                            Sentence = 0,
+                            Sentence = -1,
                             Word = 2
                         },
                         new
@@ -244,7 +244,7 @@ namespace Simulation.Migrations
                             Id = new Guid("e8bbb596-cadf-41d2-872c-a0d6c63002ba"),
                             Locale = 0,
                             Message = "Email",
-                            Sentence = 0,
+                            Sentence = -1,
                             Word = 3
                         },
                         new
@@ -252,7 +252,7 @@ namespace Simulation.Migrations
                             Id = new Guid("672ba02a-a64f-40a8-b73f-a72c22542300"),
                             Locale = 0,
                             Message = "Information",
-                            Sentence = 0,
+                            Sentence = -1,
                             Word = 4
                         },
                         new
@@ -260,7 +260,7 @@ namespace Simulation.Migrations
                             Id = new Guid("c9f5b633-7be0-4dfd-bba4-03d1d8ee6d66"),
                             Locale = 0,
                             Message = "Tip",
-                            Sentence = 0,
+                            Sentence = -1,
                             Word = 5
                         },
                         new
@@ -268,7 +268,7 @@ namespace Simulation.Migrations
                             Id = new Guid("30505114-973a-4f4e-bd98-ec28fd757a7c"),
                             Locale = 0,
                             Message = "Primary",
-                            Sentence = 0,
+                            Sentence = -1,
                             Word = 6
                         },
                         new
@@ -276,7 +276,7 @@ namespace Simulation.Migrations
                             Id = new Guid("6c2e94a9-0fde-4114-91ee-5d9c50251fe5"),
                             Locale = 0,
                             Message = "Secondary",
-                            Sentence = 0,
+                            Sentence = -1,
                             Word = 7
                         },
                         new
@@ -284,7 +284,7 @@ namespace Simulation.Migrations
                             Id = new Guid("575a4a2d-c1a3-4126-bcf1-d5dc8493c7a4"),
                             Locale = 0,
                             Message = "Success",
-                            Sentence = 0,
+                            Sentence = -1,
                             Word = 8
                         },
                         new
@@ -292,7 +292,7 @@ namespace Simulation.Migrations
                             Id = new Guid("05da1568-92e2-4c13-8fb3-875b47ff7d99"),
                             Locale = 0,
                             Message = "User name",
-                            Sentence = 0,
+                            Sentence = -1,
                             Word = 9
                         },
                         new
@@ -300,7 +300,7 @@ namespace Simulation.Migrations
                             Id = new Guid("bc26e07b-9a27-4a39-af0d-472373015a0f"),
                             Locale = 0,
                             Message = "Warning",
-                            Sentence = 0,
+                            Sentence = -1,
                             Word = 10
                         },
                         new
@@ -308,7 +308,7 @@ namespace Simulation.Migrations
                             Id = new Guid("4f1c35ec-0bfc-44d7-b018-84353763f10e"),
                             Locale = 0,
                             Message = "Welcome",
-                            Sentence = 0,
+                            Sentence = -1,
                             Word = 11
                         },
                         new
@@ -317,7 +317,7 @@ namespace Simulation.Migrations
                             Locale = 0,
                             Message = "Account deleted",
                             Sentence = 0,
-                            Word = 0
+                            Word = -1
                         },
                         new
                         {
@@ -325,7 +325,7 @@ namespace Simulation.Migrations
                             Locale = 0,
                             Message = "Can not create a user",
                             Sentence = 1,
-                            Word = 0
+                            Word = -1
                         },
                         new
                         {
@@ -333,7 +333,7 @@ namespace Simulation.Migrations
                             Locale = 0,
                             Message = "is already taken",
                             Sentence = 2,
-                            Word = 0
+                            Word = -1
                         },
                         new
                         {
@@ -341,7 +341,7 @@ namespace Simulation.Migrations
                             Locale = 0,
                             Message = "Last time you were on the site is",
                             Sentence = 3,
-                            Word = 0
+                            Word = -1
                         },
                         new
                         {
@@ -349,7 +349,7 @@ namespace Simulation.Migrations
                             Locale = 0,
                             Message = "or more",
                             Sentence = 4,
-                            Word = 0
+                            Word = -1
                         },
                         new
                         {
@@ -357,7 +357,7 @@ namespace Simulation.Migrations
                             Locale = 0,
                             Message = "Password must contain at least",
                             Sentence = 5,
-                            Word = 0
+                            Word = -1
                         },
                         new
                         {
@@ -365,7 +365,7 @@ namespace Simulation.Migrations
                             Locale = 0,
                             Message = "Passwords mismatch",
                             Sentence = 6,
-                            Word = 0
+                            Word = -1
                         },
                         new
                         {
@@ -373,7 +373,7 @@ namespace Simulation.Migrations
                             Locale = 0,
                             Message = "See you again",
                             Sentence = 7,
-                            Word = 0
+                            Word = -1
                         },
                         new
                         {
@@ -381,7 +381,7 @@ namespace Simulation.Migrations
                             Locale = 0,
                             Message = "Site error",
                             Sentence = 8,
-                            Word = 0
+                            Word = -1
                         },
                         new
                         {
@@ -389,7 +389,7 @@ namespace Simulation.Migrations
                             Locale = 0,
                             Message = "This is your first authorized visit to site",
                             Sentence = 9,
-                            Word = 0
+                            Word = -1
                         },
                         new
                         {
@@ -397,7 +397,7 @@ namespace Simulation.Migrations
                             Locale = 0,
                             Message = "User not found",
                             Sentence = 10,
-                            Word = 0
+                            Word = -1
                         },
                         new
                         {
@@ -405,7 +405,7 @@ namespace Simulation.Migrations
                             Locale = 0,
                             Message = "Verification code successfully send to your email",
                             Sentence = 11,
-                            Word = 0
+                            Word = -1
                         },
                         new
                         {
@@ -413,7 +413,7 @@ namespace Simulation.Migrations
                             Locale = 0,
                             Message = "Wrong Email verification code",
                             Sentence = 12,
-                            Word = 0
+                            Word = -1
                         },
                         new
                         {
@@ -421,7 +421,7 @@ namespace Simulation.Migrations
                             Locale = 0,
                             Message = "Wrong password",
                             Sentence = 13,
-                            Word = 0
+                            Word = -1
                         },
                         new
                         {
@@ -429,7 +429,7 @@ namespace Simulation.Migrations
                             Locale = 0,
                             Message = "Wrong user credentials to verify your email",
                             Sentence = 14,
-                            Word = 0
+                            Word = -1
                         },
                         new
                         {
@@ -437,7 +437,7 @@ namespace Simulation.Migrations
                             Locale = 0,
                             Message = "You are not allowed",
                             Sentence = 15,
-                            Word = 0
+                            Word = -1
                         },
                         new
                         {
@@ -445,7 +445,7 @@ namespace Simulation.Migrations
                             Locale = 0,
                             Message = "You must confirm it before login",
                             Sentence = 16,
-                            Word = 0
+                            Word = -1
                         },
                         new
                         {
@@ -453,7 +453,7 @@ namespace Simulation.Migrations
                             Locale = 0,
                             Message = "Your Email is confirmed",
                             Sentence = 17,
-                            Word = 0
+                            Word = -1
                         },
                         new
                         {
@@ -461,7 +461,7 @@ namespace Simulation.Migrations
                             Locale = 0,
                             Message = "Your Email is not confirmed",
                             Sentence = 18,
-                            Word = 0
+                            Word = -1
                         });
                 });
 
@@ -561,8 +561,8 @@ namespace Simulation.Migrations
                         {
                             Id = "A34B367E-7677-4730-BAD0-13A419B0796A",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "48ce8ee8-f6d9-452c-8859-6d11719d6258",
-                            ConfirmDate = new DateTime(2020, 6, 25, 19, 42, 22, 405, DateTimeKind.Utc).AddTicks(191),
+                            ConcurrencyStamp = "a825bd58-1cb0-411c-a9e8-a430117a3767",
+                            ConfirmDate = new DateTime(2020, 6, 26, 7, 22, 44, 430, DateTimeKind.Utc).AddTicks(5112),
                             Email = "admin@rboard.com",
                             EmailConfirmed = true,
                             FirstName = "Site",
@@ -571,10 +571,10 @@ namespace Simulation.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@RBOARD.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOF2/uktz1iUg8kxQdr8/XCxg4Redt7pg/GyQPY0wcteIZ+a5Zg5C482RngRvYDNeQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFBcd5Nh/zijOC+1cfYEzkZEafuY9Q7EytWf4cj4jSABSOPWTCVfBivAeSpUITRCuw==",
                             PhoneNumberConfirmed = false,
-                            RegisterDate = new DateTime(2020, 6, 25, 19, 42, 22, 404, DateTimeKind.Utc).AddTicks(9012),
-                            SecurityStamp = "d3dbd471-1332-4b00-9f06-b3e87c624a13",
+                            RegisterDate = new DateTime(2020, 6, 26, 7, 22, 44, 430, DateTimeKind.Utc).AddTicks(2262),
+                            SecurityStamp = "85e02a8a-11d3-4386-a295-98d39aebbc28",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });

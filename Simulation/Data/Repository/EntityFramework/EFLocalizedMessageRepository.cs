@@ -18,14 +18,15 @@ namespace Simulation.Data.Repository.EntityFramework
 
         public async Task<string> GetLocalizedWord(LocaleType locale, StringWords word, string appendix = null)
         {
-            LocalizedMessage result = await context.LocalizedMessages.FirstOrDefaultAsync(entity => entity.Locale == locale && entity.Word == word).ConfigureAwait(false);
+            LocalizedMessage result = await context.LocalizedMessages.FirstOrDefaultAsync(entity => entity.Locale == locale && entity.Sentence == StringSentences.IsNull && entity.Word == word).ConfigureAwait(false);
 
             if (string.IsNullOrEmpty(result.Message)) return "This message is not localized";
+            else if (appendix == " ") return result.Message + appendix;
             else return appendix == null ? result.Message : result.Message + " " + appendix;
         }
         public async Task<string> GetLocalizedSentence(LocaleType locale, StringSentences sentence, string appendix = null)
         {
-            LocalizedMessage result = await context.LocalizedMessages.FirstOrDefaultAsync(entity => entity.Locale == locale && entity.Sentence == sentence).ConfigureAwait(false);
+            LocalizedMessage result = await context.LocalizedMessages.FirstOrDefaultAsync(entity => entity.Locale == locale && entity.Word == StringWords.IsNull && entity.Sentence == sentence).ConfigureAwait(false);
 
             if (string.IsNullOrEmpty(result.Message)) return "This message is not localized";
             else if (appendix == " ") return result.Message + appendix;

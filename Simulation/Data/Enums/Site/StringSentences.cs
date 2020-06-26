@@ -2,6 +2,7 @@
 {
     public enum StringSentences : int
     {
+        IsNull = -1,
         AccountDeleted,
         CanNotCreateAUser,
         IsAlreadyTaken,
